@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH1=/home/htdoffi1/akuntansi.htd-official.com
+    - /bin/cp -a * $DEPLOYPATH1
