@@ -4,6 +4,10 @@ $table = $_GET['table'];
 $conn = conn();
 $db   = new Database($conn);
 
+$data = $db->single($table, [
+    'id' => $_GET['id']
+]);
+
 if(file_exists('../actions/'.$table.'/before-delete.php'))
     require '../actions/'.$table.'/before-delete.php';
 

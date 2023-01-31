@@ -40,6 +40,9 @@ if(isset($_GET['draw']))
         $where = "WHERE (".implode(' OR ',$_where).")";
     }
 
+    $col_order = $order[0]['column']-1;
+    $col_order = $col_order < 0 ? 'id' : $columns[$col_order];
+
     if(file_exists('../actions/'.$table.'/override-index.php'))
     {
         $override = require '../actions/'.$table.'/override-index.php';
@@ -47,7 +50,7 @@ if(isset($_GET['draw']))
     }
     else
     {
-        $db->query = "SELECT * FROM $table $where ORDER BY ".$columns[$order[0]['column']]." ".$order[0]['dir']." LIMIT $start,$length";
+        $db->query = "SELECT * FROM $table $where ORDER BY ".$col_order." ".$order[0]['dir']." LIMIT $start,$length";
         $data  = $db->exec('all');
 
         $total = $db->exists($table,$where,[
@@ -77,12 +80,16 @@ if(isset($_GET['draw']))
                 $data_value = Form::getData($field['type'],$d->{$col},true);
                 if($field['type'] == 'number')
                 {
-                    $data_value = number_format($data_value);
+                    $data_value = number_format($data_value,0,',','.');
                 }
 
                 if($field['type'] == 'file')
                 {
                     $data_value = '<a href="'.asset($data_value).'" target="_blank">Lihat File</a>';
+                }
+                if($field['type'] == 'date')
+                {
+                    $data_value = date('d/m/Y', strtotime($data_value));
                 }
             }
             else
@@ -99,10 +106,16 @@ if(isset($_GET['draw']))
             // $table, $d (data object)
             $action .= require '../actions/'.$table.'/action-button.php';
         }
-        if(is_allowed(get_route_path('crud/edit',['table'=>$table]),auth()->user->id)):
+        if(
+            ($table == 'reports' && is_allowed(get_route_path('crud/edit',['table'=>$table]),auth()->user->id)) ||
+            ($table != 'reports' && is_allowed(get_route_path('crud/edit',['table'=>$table]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
+            ):
             $action .= '<a href="'.routeTo('crud/edit',['table'=>$table,'id'=>$d->id]).'" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>';
         endif;
-        if(is_allowed(get_route_path('crud/delete',['table'=>$table]),auth()->user->id)):
+        if(
+            ($table == 'reports' && is_allowed(get_route_path('crud/delete',['table'=>$table]),auth()->user->id)) ||
+            ($table != 'reports' && is_allowed(get_route_path('crud/delete',['table'=>$table]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
+            ):
             $action .= '<a href="'.routeTo('crud/delete',['table'=>$table,'id'=>$d->id]).'" onclick="if(confirm(\'apakah anda yakin akan menghapus data ini ?\')){return true}else{return false}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>';
         endif;
         $results[$key][] = $action;

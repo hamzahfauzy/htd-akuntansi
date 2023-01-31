@@ -24,6 +24,14 @@
 
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="<?=asset('assets/css/demo.css')?>">
+	<style>
+    .table>tbody>tr>td,.table>thead>tr>th {
+        padding:5px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        height: auto !important;
+    }
+    </style>
 </head>
 <body>
 	<div class="wrapper">

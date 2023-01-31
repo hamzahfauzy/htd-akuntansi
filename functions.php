@@ -704,3 +704,11 @@ function getBearerToken() {
     }
     return null;
 }
+
+
+function activeMaster()
+{
+    $conn  = conn();
+    $db    = new Database($conn);
+    return $db->single('reports',['is_active'=>'YA']);
+}

@@ -8,8 +8,22 @@
                         <h5 class="text-white op-7 mb-2">Memanajemen data <?=_ucwords(__($table))?></h5>
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
-                        <?php if(is_allowed(get_route_path('crud/create',['table'=>$table]),auth()->user->id)): ?>
+                        <?php if(
+                            (in_array($table,['accounts','cash_flows']) && is_allowed(get_route_path('accounts/import',[]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
+                            ): ?>
+                            <a href="<?=routeTo($table.'/import')?>" class="btn btn-info btn-round">Import Data</a>
+                        <?php endif ?>
+                        <?php if(
+                            ($table == 'reports' && is_allowed(get_route_path('crud/create',['table'=>$table]),auth()->user->id)) ||
+                            ($table != 'reports' && is_allowed(get_route_path('crud/create',['table'=>$table]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
+                            ): ?>
                             <a href="<?=routeTo('crud/create',['table'=>$table])?>" class="btn btn-secondary btn-round">Buat <?=_ucwords(__($table))?></a>
+                        <?php endif ?>
+
+                        <?php if(
+                            ($table == 'cash_flows' && is_allowed(get_route_path('cash_flows/index',[]),auth()->user->id) && !isset($_GET['full']))
+                            ): ?>
+                            <a href="<?=routeTo('cash_flows/index')?>" class="btn btn-primary btn-round">Lihat Mutasi Lengkap</a>
                         <?php endif ?>
                     </div>
                 </div>

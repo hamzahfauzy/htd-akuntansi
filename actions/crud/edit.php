@@ -15,6 +15,11 @@ $data = $db->single($table,[
     'id' => $_GET['id']
 ]);
 
+if(file_exists('../actions/'.$table.'/override-edit-data.php'))
+{
+    $data = require '../actions/'.$table.'/override-edit-data.php';
+}
+
 if(request() == 'POST')
 {
     if(file_exists('../actions/'.$table.'/before-edit.php'))
