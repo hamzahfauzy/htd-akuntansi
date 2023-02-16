@@ -4,11 +4,12 @@
             <div class="page-inner py-5">
                 <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                     <div>
-                        <h2 class="text-white pb-2 fw-bold">Buat <?=_ucwords(__($table))?> Baru</h2>
-                        <h5 class="text-white op-7 mb-2">Memanajemen data <?=_ucwords(__($table))?></h5>
+                        <h2 class="text-white pb-2 fw-bold">Import Subjek</h2>
+                        <h5 class="text-white op-7 mb-2">Memanajemen data subjects</h5>
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
-                    <a href="<?=routeTo('crud/index',['table'=>$table])?>" class="btn btn-warning btn-round">Kembali</a>
+                        <a href="<?=asset('format/subjek.xls')?>" class="btn btn-info btn-round">Download Format</a>
+                        <a href="<?=routeTo('crud/index',['table'=>'subjects'])?>" class="btn btn-warning btn-round">Kembali</a>
                     </div>
                 </div>
             </div>
@@ -52,24 +53,4 @@
             </div>
         </div>
     </div>
-    <?php if($table == 'bills'): ?>
-    <script>
-    var sentNotif = document.querySelector('[name="<?=$table?>[sent_notif]"]')
-    if(sentNotif)
-    {
-        sentNotif.addEventListener('change', e => {
-            if(sentNotif.value == 'Tidak')
-            {
-                document.querySelector('[name="bills[notification_to]"]').parentElement.style.display="none"
-                document.querySelector('[name="bills[notification_date]"]').parentElement.style.display="none"
-            }
-            else
-            {
-                document.querySelector('[name="bills[notification_to]"]').parentElement.style.display="block"
-                document.querySelector('[name="bills[notification_date]"]').parentElement.style.display="block"
-            }
-        })
-    }
-    </script>
-    <?php endif ?>
 <?php load_templates('layouts/bottom') ?>

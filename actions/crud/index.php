@@ -54,7 +54,7 @@ if(isset($_GET['draw']))
         $data  = $db->exec('all');
 
         $total = $db->exists($table,$where,[
-            $columns[$order[0]['column']] => $order[0]['dir']
+            $col_order => $order[0]['dir']
         ]);
     }
 
@@ -87,7 +87,7 @@ if(isset($_GET['draw']))
                 {
                     $data_value = '<a href="'.asset($data_value).'" target="_blank">Lihat File</a>';
                 }
-                if($field['type'] == 'date')
+                if($field['type'] == 'date' && $data_value)
                 {
                     $data_value = date('d/m/Y', strtotime($data_value));
                 }
@@ -110,13 +110,13 @@ if(isset($_GET['draw']))
             ($table == 'reports' && is_allowed(get_route_path('crud/edit',['table'=>$table]),auth()->user->id)) ||
             ($table != 'reports' && is_allowed(get_route_path('crud/edit',['table'=>$table]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
             ):
-            $action .= '<a href="'.routeTo('crud/edit',['table'=>$table,'id'=>$d->id]).'" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>';
+            $action .= ' <a href="'.routeTo('crud/edit',['table'=>$table,'id'=>$d->id]).'" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>';
         endif;
         if(
             ($table == 'reports' && is_allowed(get_route_path('crud/delete',['table'=>$table]),auth()->user->id)) ||
             ($table != 'reports' && is_allowed(get_route_path('crud/delete',['table'=>$table]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
             ):
-            $action .= '<a href="'.routeTo('crud/delete',['table'=>$table,'id'=>$d->id]).'" onclick="if(confirm(\'apakah anda yakin akan menghapus data ini ?\')){return true}else{return false}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>';
+            $action .= ' <a href="'.routeTo('crud/delete',['table'=>$table,'id'=>$d->id]).'" onclick="if(confirm(\'apakah anda yakin akan menghapus data ini ?\')){return true}else{return false}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>';
         endif;
         $results[$key][] = $action;
     }
