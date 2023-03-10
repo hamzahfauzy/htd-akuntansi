@@ -42,13 +42,13 @@
                                             <th>Tanggal</th>
                                             <th>Kode Akun</th>
                                             <?php 
-                                            foreach($fields as $field): 
+                                            foreach($fields as $key => $field): 
                                                 $label = $field;
                                                 if(is_array($field))
                                                 {
                                                     $label = $field['label'];
                                                 }
-                                                if($label == 'tanggal') continue;
+                                                if($key == 'date') continue;
                                                 $label = _ucwords($label);
                                             ?>
                                             <th><?=$label?></th>
