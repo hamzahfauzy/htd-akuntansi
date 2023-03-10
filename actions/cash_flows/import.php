@@ -46,7 +46,7 @@ if(request() == 'POST')
         if($db->exists('accounts',['code' => $code, 'report_id' => $report_id]))
         {
             $account = $db->single('accounts',['code' => $code, 'report_id' => $report_id]);
-            $date = $worksheet->getCellByColumnAndRow(6, $row)->getFormattedValue();
+            $date = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
             $date = DateTime::createFromFormat('d/m/Y', $date);
             $data = [
                 'report_id' => $report_id,
