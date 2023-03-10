@@ -40,6 +40,7 @@
                                     <thead>
                                         <tr>
                                             <th>Kode Akun</th>
+                                            <th>Tanggal</th>
                                             <?php 
                                             foreach($fields as $field): 
                                                 $label = $field;
@@ -62,6 +63,7 @@
                                         ?>
                                         <tr>
                                             <td style="white-space:nowrap"><?=$accounts[$d->account_id]->code;?></td>
+                                            <td style="white-space:nowrap"><?=date('d/m/Y', strtotime($d->date))?></td>
                                             <?php 
                                             foreach($fields as $key => $field): 
                                                 if(is_array($field))
@@ -93,6 +95,7 @@
                                                 {
                                                     $data_value = $accounts[$data_value]->name;
                                                 }
+                                                if($field == 'date') continue;
 
                                             ?>
                                             <td style="white-space:nowrap"><?=$data_value?></td>
