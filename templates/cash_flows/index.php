@@ -39,8 +39,8 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Kode Akun</th>
                                             <th>Tanggal</th>
+                                            <th>Kode Akun</th>
                                             <?php 
                                             foreach($fields as $field): 
                                                 $label = $field;
@@ -48,6 +48,7 @@
                                                 {
                                                     $label = $field['label'];
                                                 }
+                                                if($label == 'tanggal') continue;
                                                 $label = _ucwords($label);
                                             ?>
                                             <th><?=$label?></th>
@@ -62,8 +63,8 @@
                                         foreach($data as $index => $d): 
                                         ?>
                                         <tr>
-                                            <td style="white-space:nowrap"><?=$accounts[$d->account_id]->code;?></td>
                                             <td style="white-space:nowrap"><?=date('d/m/Y', strtotime($d->date))?></td>
+                                            <td style="white-space:nowrap"><?=$accounts[$d->account_id]->code;?></td>
                                             <?php 
                                             foreach($fields as $key => $field): 
                                                 if(is_array($field))
