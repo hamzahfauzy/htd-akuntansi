@@ -12,6 +12,8 @@ if(file_exists('../actions/'.$table.'/override-index-fields.php'))
 
 $data = $db->all('cash_flows',[
     'report_id' => activeMaster()?activeMaster()->id:0
+],[
+    'date' => 'ASC'
 ]);
 
 $account_ids = array_column((array) $data, 'account_id');
