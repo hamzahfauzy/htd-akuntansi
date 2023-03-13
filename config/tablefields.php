@@ -191,4 +191,26 @@ return [
             'type'  => 'email'
         ],
     ],
+    'journals' => [
+        'date' => [
+            'label' => 'Tanggal',
+            'type'  => 'date'
+        ],
+        'account' => [
+            'label' => 'Akun',
+            'type'  => 'text'
+        ],
+        'debit' => [
+            'label' => 'Debit',
+            'type'  => 'number'
+        ],
+        'kredit' => [
+            'label' => 'Kredit',
+            'type'  => 'number'
+        ],
+        'description' => [
+            'label' => 'Deskripsi',
+            'type'  => 'textarea'
+        ],
+    ]
 ];

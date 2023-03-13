@@ -1,20 +1,16 @@
 <?php
 
-$table = 'cash_flows';
+$table = 'journals';
 Page::set_title(_ucwords(__($table)));
 $conn = conn();
 $db   = new Database($conn);
 $success_msg = get_flash_msg('success');
 $fields = config('fields')[$table];
 
-if(file_exists('../actions/'.$table.'/override-index-fields.php'))
-    $fields = require '../actions/'.$table.'/override-index-fields.php';
-
-$data = $db->all('cash_flows',[
+$data = $db->all($table,[
     'report_id' => activeMaster()?activeMaster()->id:0
 ],[
-    'date' => 'ASC',
-    'notes' => 'ASC'
+    'date' => 'ASC'
 ]);
 
 $account_ids = array_column((array) $data, 'account_id');
@@ -25,6 +21,13 @@ foreach($accounts as $key => $account)
 {
     $dump_accounts[$account->id] = $account;
 }
+
+$data = array_map(function($d) use ($dump_accounts){
+    $d->debit = $d->transaction_type == 'Debit' ? number_format($d->amount) : '';
+    $d->kredit = $d->transaction_type == 'Kredit' ? number_format($d->amount) : '';
+    $d->account = $dump_accounts[$d->account_id]->code .' '. $dump_accounts[$d->account_id]->name;
+    return $d;
+}, $data);
 
 return [
     'table' => $table,

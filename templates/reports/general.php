@@ -4,7 +4,7 @@
             <div class="page-inner py-5">
                 <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                     <div>
-                        <h2 class="text-white pb-2 fw-bold">General Ledger</h2>
+                        <h2 class="text-white pb-2 fw-bold">Buku Besar</h2>
                         <h5 class="text-white op-7 mb-2">Memanajemen data laporan</h5>
                     </div>
                 </div>
@@ -46,14 +46,13 @@
                                 <button class="d-none">submit</button>
                             </form>
 
-                            <?php if(isset($cash_flows) && $cash_flows): ?>
+                            <?php if(isset($journals) && $journals): ?>
                             <div class="table-responsive table-hover table-sales">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Tanggal</th>
-                                            <th>Catatan</th>
                                             <th>Deskripsi</th>
                                             <th>Debet</th>
                                             <th>Kredit</th>
@@ -63,19 +62,24 @@
                                     <tbody>
                                         <?php 
                                         $balance = $account->balance_amount;
-                                        foreach($cash_flows as $idx => $trx): 
-                                            $balance = $trx->cash_type=='Kas Keluar' ? $balance+$trx->amount : $balance-$trx->amount;
+                                        $balance_type = ['Db' => 'Debit','Cr' => 'Kredit'];
+                                        foreach($journals as $idx => $trx): 
+                                            $balance = $trx->transaction_type==$balance_type[$account->balance_position] ? $balance+$trx->amount : $balance-$trx->amount;
                                         ?>
                                         <tr>
                                             <td style="white-space:nowrap"><?=$idx+1?></td>
                                             <td style="white-space:nowrap"><?=date('d/m/Y', strtotime($trx->date))?></td>
-                                            <td style="white-space:nowrap"><?=$trx->notes?></td>
                                             <td style="white-space:nowrap"><?=$trx->description?></td>
-                                            <td style="white-space:nowrap"><?=$trx->cash_type=='Kas Keluar'?number_format($trx->amount,0,',','.'):''?></td>
-                                            <td style="white-space:nowrap"><?=$trx->cash_type=='Kas Masuk'?number_format($trx->amount,0,',','.'):''?></td>
-                                            <td style="white-space:nowrap"><?=number_format($balance,0,',','.')?></td>
+                                            <td style="white-space:nowrap;text-align:right"><?=$trx->transaction_type=='Debit'?number_format($trx->amount,0,',','.'):''?></td>
+                                            <td style="white-space:nowrap;text-align:right"><?=$trx->transaction_type=='Kredit'?number_format($trx->amount,0,',','.'):''?></td>
+                                            <td style="white-space:nowrap;text-align:right"><?=number_format($balance,0,',','.')?></td>
                                         </tr>
                                         <?php endforeach ?>
+                                        <tr>
+                                            <td colspan="6">
+                                                <center>Balance : <b><?=number_format($balance, 0,',','.')?></b></center>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

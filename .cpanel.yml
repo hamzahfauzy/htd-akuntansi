@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH1=/home/htdoffi1/akuntansi.htd-official.com
+    #- export DEPLOYPATH1=/home/htdoffi1/akuntansi.htd-official.com
     - export DEPLOYPATH2=/home/htdoffi1/keuangan.htd-official.com
-    - /bin/cp -a * $DEPLOYPATH1
+    #- /bin/cp -a * $DEPLOYPATH1
     - /bin/cp -a * $DEPLOYPATH2

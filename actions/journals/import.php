@@ -1,6 +1,6 @@
 <?php
 
-$table = 'accounts';
+$table = 'journals';
 Page::set_title('Import '._ucwords(__($table)));
 $error_msg = get_flash_msg('error');
 $old = get_flash_msg('old');
@@ -41,58 +41,36 @@ if(request() == 'POST')
     $db   = new Database($conn);
 
     for ($row = 2; $row <= $highestRow; $row++) { 
-        $code = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+        $code = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
         // check if code exists
         if($db->exists('accounts',['code' => $code, 'report_id' => $report_id]))
         {
+            $account = $db->single('accounts',['code' => $code, 'report_id' => $report_id]);
+            $date = $worksheet->getCellByColumnAndRow(1, $row)->getFormattedValue();
+            $date = DateTime::createFromFormat('d-m-Y', $date);
+            $debt =  $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+            $credit =  $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+            $transaction_type = !empty($debt) ? 'Debit' : 'Kredit';
+            $data = [
+                'report_id' => $report_id,
+                'account_id' => $account->id,
+                'transaction_type' => $transaction_type,
+                'amount' => !empty($debt) ? $debt : $credit,
+                'description' => $worksheet->getCellByColumnAndRow(6, $row)->getValue(),
+                'date' => $date->format('Y-m-d'),
+            ];
+
+            $db->insert($table, $data);
+            $success++;
+        }
+        else
+        {
             $failed++;
-            continue;
         }
-
-        $parent = null;
-        $parent_code = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-        if(!empty($parent_code))
-        {
-            $_parent = $db->single('accounts',['code' => $parent_code, 'report_id'=>$report_id]);
-            if(!$_parent)
-            {
-                $failed++;
-                continue;
-            }
-            $parent = $_parent->id;
-        }
-        $data = [
-            'report_id' => $report_id,
-            'parent_id' => $parent,
-            'code' => $code,
-            'name' => $worksheet->getCellByColumnAndRow(3, $row)->getValue(),
-            'balance_position' => $worksheet->getCellByColumnAndRow(4, $row)->getValue(),
-            'report_position' => $worksheet->getCellByColumnAndRow(5, $row)->getValue(),
-            'balance_amount' => $worksheet->getCellByColumnAndRow(6, $row)->getValue(),
-            'budget_amount' => $worksheet->getCellByColumnAndRow(7, $row)->getValue(),
-        ];
-        
-        if(is_null($parent))
-        {
-            unset($data['parent_id']);
-        }
-
-        if(empty($data['balance_amount']))
-        {
-            unset($data['balance_amount']);
-        }
-
-        if(empty($data['budget_amount']))
-        {
-            unset($data['budget_amount']);
-        }
-
-        $db->insert('accounts', $data);
-        $success++;
     }
 
     set_flash_msg(['success'=>$success.' data berhasil di import.<br>'.$failed.' data gagal di import.']);
-    header('location:'.routeTo('accounts/index'));
+    header('location:'.routeTo('journals/index'));
 }
 
 return compact('table','error_msg','old','fields');

@@ -4,16 +4,16 @@ return [
     'dashboard' => 'default/index',
     'akuntansi' => [
         'master data' => 'crud/index?table=reports',
-        'akun' => [
-            'master akun' => 'accounts/index',
-            'pengaturan akun' => 'crud/index?table=account_settings',
-        ],
-        'mutasi kas' => 'crud/index?table=cash_flows',
-        'modul' => 'crud/index?table=modules',
+        'akun' => 'accounts/index',
+        // 'mutasi kas' => 'crud/index?table=cash_flows',
+        'jurnal' => 'journals/index',
+        // 'modul' => 'crud/index?table=modules',
         'laporan' => [
-            'General Ledger' => 'reports/general',
-            'KKA' => 'reports/worksheet',
-            'Keuangan' => 'reports/finance',
+            'Buku Besar' => 'reports/general',
+            'Laba Rugi' => 'reports/profit',
+            'Neraca' => 'reports/balance',
+            // 'KKA' => 'reports/worksheet',
+            // 'Keuangan' => 'reports/finance',
         ],
     ],
     'keuangan' => [

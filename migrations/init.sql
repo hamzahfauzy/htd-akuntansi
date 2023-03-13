@@ -57,9 +57,9 @@ CREATE TABLE accounts (
     code VARCHAR(100) NOT NULL,
     name VARCHAR(100) NOT NULL,
     balance_position VARCHAR(100) NOT NULL,
-    balance_amount DOUBLE(10, 2) NOT NULL,
+    balance_amount DOUBLE(10, 2) DEFAULT NULL,
     report_position VARCHAR(100) NOT NULL,
-    budget_amount DOUBLE(10, 2) NOT NULL,
+    budget_amount DOUBLE(10, 2) DEFAULT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_accounts_report_id FOREIGN KEY (report_id) REFERENCES reports(id) ON DELETE CASCADE,
     CONSTRAINT fk_accounts_parent_id FOREIGN KEY (parent_id) REFERENCES accounts(id) ON DELETE CASCADE
