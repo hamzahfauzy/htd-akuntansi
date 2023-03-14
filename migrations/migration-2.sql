@@ -3,7 +3,7 @@ CREATE TABLE journals (
     report_id INT NOT NULL,
     account_id INT NOT NULL,
     transaction_type VARCHAR(100) DEFAULT NULL,
-    amount DOUBLE(10, 2) NOT NULL,
+    amount DOUBLE(11, 2) NOT NULL,
     description TEXT NOT NULL,
     date DATE NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -21,7 +21,7 @@
                             <?php if($success_msg): ?>
                             <div class="alert alert-success"><?=$success_msg?></div>
                             <?php endif ?>
-                            <form action="" method="post">
+                            <form action="" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="app[id]" value="<?=$data->id?>">
                                 <div class="form-group">
                                     <label for="">Nama</label>
@@ -38,6 +38,18 @@
                                 <div class="form-group">
                                     <label for="">E-Mail</label>
                                     <input type="email" name="app[email]" class="form-control" value="<?=$data->email?>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Distrik</label>
+                                    <input type="text" name="app[district]" class="form-control" value="<?=$data->district?>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Pimpinan</label>
+                                    <input type="text" name="app[leader]" class="form-control" value="<?=$data->leader?>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Logo <?=isset($data->logo) && $data->logo?'(<a href="'.asset($data->logo).'">Lihat</a>)':''?></label>
+                                    <input type="file" name="logo" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary">Submit</button>

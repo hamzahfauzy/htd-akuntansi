@@ -5,11 +5,11 @@
             <div class="page-inner py-5">
                 <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                     <div>
-                        <h2 class="text-white pb-2 fw-bold">Laba Rugi</h2>
-                        <h5 class="text-white op-7 mb-2">Memanajemen laporan Laba Rugi</h5>
+                        <h2 class="text-white pb-2 fw-bold">Neraca</h2>
+                        <h5 class="text-white op-7 mb-2">Memanajemen laporan Neraca</h5>
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
-                        <a href="<?=routeTo('reports/profit',['print'=>1])?>" class="btn btn-secondary btn-round">Cetak</a>
+                        <a href="<?=routeTo('reports/balance',['print'=>1])?>" class="btn btn-secondary btn-round">Cetak</a>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                                     <p style="margin:0;padding:0">HP : <?=app('phone')?>, Email : <?=app('email')?></p>
                                 </div>
                                 <hr>
-                                <center><h3>LAPORAN LABA RUGI</h3></center>
+                                <center><h3>LAPORAN NERACA</h3></center>
                                 <table width="100%" border="1" cellpadding="5" cellspacing="0">
                                 <?php endif ?>
                                     <thead>
@@ -45,7 +45,7 @@
                                         <?php 
                                         $total_debt = 0; 
                                         $total_credit = 0;
-                                        foreach($pendapatan as $index => $d): 
+                                        foreach($aktiva as $index => $d): 
                                             $total_debt += $d->debt;
                                             $total_credit += $d->credit;
                                         ?>
@@ -56,7 +56,7 @@
                                         </tr>
                                         <?php 
                                         endforeach; 
-                                        $total_pendapatan = $total_credit-$total_debt;
+                                        $total_aktiva = $total_debt-$total_credit;
                                         ?>
                                         <tr>
                                             <td style="font-weight:bold">Sub Total</td>
@@ -65,13 +65,13 @@
                                         </tr>
                                         <tr>
                                             <td style="font-weight:bold">Total</td>
-                                            <td style="font-weight:bold" colspan="5"><?=number_format($total_pendapatan,0,',','.')?></td>
+                                            <td style="font-weight:bold" colspan="5"><?=number_format($total_aktiva,0,',','.')?></td>
                                         </tr>
                                     
                                         <?php 
                                         $total_debt = 0; 
                                         $total_credit = 0;
-                                        foreach($beban as $index => $d): 
+                                        foreach($hutang as $index => $d): 
                                             $total_debt += $d->debt;
                                             $total_credit += $d->credit;
                                         ?>
@@ -82,7 +82,7 @@
                                         </tr>
                                         <?php 
                                         endforeach; 
-                                        $total_beban = $total_debt-$total_credit;
+                                        $total_hutang = $total_credit-$total_debt;
                                         ?>
                                         <tr>
                                             <td style="font-weight:bold">Sub Total</td>
@@ -91,11 +91,33 @@
                                         </tr>
                                         <tr>
                                             <td style="font-weight:bold">Total</td>
-                                            <td style="font-weight:bold" colspan="5"><?=number_format($total_beban,0,',','.')?></td>
+                                            <td style="font-weight:bold" colspan="5"><?=number_format($total_hutang,0,',','.')?></td>
+                                        </tr>
+
+                                        <?php 
+                                        $total_debt = 0; 
+                                        $total_credit = 0;
+                                        foreach($modal as $index => $d): 
+                                            $total_debt += $d->debt;
+                                            $total_credit += $d->credit;
+                                        ?>
+                                        <tr <?=strtolower($d->balance_position) == 'header' ? 'style="font-weight:bold"' : ''?>>
+                                            <td><?=$d->code.' '.$d->name?></td>
+                                            <td><?=strtolower($d->balance_position) == 'header' ? '-' : number_format($d->debt,0,',','.')?></td>
+                                            <td><?=strtolower($d->balance_position) == 'header' ? '-' : number_format($d->credit,0,',','.')?></td>
+                                        </tr>
+                                        <?php 
+                                        endforeach; 
+                                        $total_modal = $total_credit-$total_debt;
+                                        ?>
+                                        <tr>
+                                            <td style="font-weight:bold">Sub Total</td>
+                                            <td style="font-weight:bold"><?=number_format($total_debt,0,',','.')?></td>
+                                            <td style="font-weight:bold"><?=number_format($total_credit,0,',','.')?></td>
                                         </tr>
                                         <tr>
-                                            <td style="font-weight:bold">Laba Rugi</td>
-                                            <td style="font-weight:bold" colspan="5"><?=number_format($total_pendapatan-$total_beban,0,',','.')?></td>
+                                            <td style="font-weight:bold">Total</td>
+                                            <td style="font-weight:bold" colspan="5"><?=number_format($total_modal,0,',','.')?></td>
                                         </tr>
                                     </tbody>
                                 </table>
