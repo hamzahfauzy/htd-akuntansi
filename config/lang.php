@@ -8,5 +8,7 @@ return [
     'bills' => 'Tagihan',
     'groups' => 'Group',
     'subjects' => 'Subjek',
-    'journals' => 'Jurnal'
+    'journals' => 'Jurnal',
+    'modules' => 'Modul',
+    'merchants' => 'Merchant'
 ];

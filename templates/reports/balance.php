@@ -64,7 +64,7 @@
                                             <td style="font-weight:bold"><?=number_format($total_credit,0,',','.')?></td>
                                         </tr>
                                         <tr>
-                                            <td style="font-weight:bold">Total</td>
+                                            <td style="font-weight:bold">Total Harta</td>
                                             <td style="font-weight:bold" colspan="5"><?=number_format($total_aktiva,0,',','.')?></td>
                                         </tr>
                                     
@@ -90,7 +90,7 @@
                                             <td style="font-weight:bold"><?=number_format($total_credit,0,',','.')?></td>
                                         </tr>
                                         <tr>
-                                            <td style="font-weight:bold">Total</td>
+                                            <td style="font-weight:bold">Total Kewajiban</td>
                                             <td style="font-weight:bold" colspan="5"><?=number_format($total_hutang,0,',','.')?></td>
                                         </tr>
 
@@ -116,9 +116,10 @@
                                             <td style="font-weight:bold"><?=number_format($total_credit,0,',','.')?></td>
                                         </tr>
                                         <tr>
-                                            <td style="font-weight:bold">Total</td>
+                                            <td style="font-weight:bold">Total Modal</td>
                                             <td style="font-weight:bold" colspan="5"><?=number_format($total_modal,0,',','.')?></td>
                                         </tr>
+                                        
                                     </tbody>
                                 </table>
                                 <?php if(isset($_GET['print'])): ?>

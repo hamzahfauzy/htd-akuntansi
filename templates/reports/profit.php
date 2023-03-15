@@ -64,7 +64,7 @@
                                             <td style="font-weight:bold"><?=number_format($total_credit,0,',','.')?></td>
                                         </tr>
                                         <tr>
-                                            <td style="font-weight:bold">Total</td>
+                                            <td style="font-weight:bold">Total Pendapatan</td>
                                             <td style="font-weight:bold" colspan="5"><?=number_format($total_pendapatan,0,',','.')?></td>
                                         </tr>
                                     
@@ -90,11 +90,11 @@
                                             <td style="font-weight:bold"><?=number_format($total_credit,0,',','.')?></td>
                                         </tr>
                                         <tr>
-                                            <td style="font-weight:bold">Total</td>
+                                            <td style="font-weight:bold">Total Beban</td>
                                             <td style="font-weight:bold" colspan="5"><?=number_format($total_beban,0,',','.')?></td>
                                         </tr>
                                         <tr>
-                                            <td style="font-weight:bold">Laba Rugi</td>
+                                            <td style="font-weight:bold">Laba Rugi (Pendapatan - Beban)</td>
                                             <td style="font-weight:bold" colspan="5"><?=number_format($total_pendapatan-$total_beban,0,',','.')?></td>
                                         </tr>
                                     </tbody>

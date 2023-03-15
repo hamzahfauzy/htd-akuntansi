@@ -21,6 +21,9 @@ if(isset($_POST[$table]['ref_id']))
         }
         unset($data['created_at']);
 
+        if(empty($data['budget_amount'])) unset($data['budget_amount']);
+        if(empty($data['balance_amount'])) unset($data['balance_amount']);
+
         $new_account = $db->insert('accounts', $data);
         $map_accounts[$account->id] = $new_account->id;
     }

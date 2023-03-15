@@ -20,6 +20,12 @@
                             <a href="<?=routeTo('journals/clear')?>" class="btn btn-danger btn-round">Clear Data</a>
                         <?php endif ?>
 
+                        <?php if(
+                            (is_allowed(get_route_path('journals/create',[]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
+                            ): ?>
+                            <a href="<?=routeTo('journals/create')?>" class="btn btn-primary btn-round">Tambah Data</a>
+                        <?php endif ?>
+
                         
 
                         <?php /* if(
@@ -55,6 +61,9 @@
                                             ?>
                                             <th><?=$label?></th>
                                             <?php endforeach ?>
+                                            <?php if(activeMaster() && activeMaster()->is_open == 'BUKA'): ?>
+                                            <th></th>
+                                            <?php endif ?>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -99,6 +108,21 @@
                                             ?>
                                             <td style="white-space:nowrap;<?=$type=='number'?'text-align:right;':''?>"><?=$data_value?></td>
                                             <?php endforeach ?>
+                                            <?php if(activeMaster() && activeMaster()->is_open == 'BUKA'): ?>
+                                            <td style="white-space:nowrap;">
+                                            <?php if(
+                                                    (is_allowed(get_route_path('journals/edit',[]),auth()->user->id))
+                                                    ): ?>
+                                                <a href="<?=routeTo('journals/edit',['id'=>$data->id])?>" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                            <?php endif ?>
+                                            
+                                            <?php if(
+                                                (is_allowed(get_route_path('journals/edit',[]),auth()->user->id))
+                                                ): ?>
+                                                <a href="<?=routeTo('journals/delete',['id'=>$data->id])?>" class="btn btn-sm btn-danger" onclick="if(confirm('Apakah anda yakin akan menghapus data ini ?')){return true}else{return false}"><i class="fas fa-trash"></i> Hapus</a>
+                                            <?php endif ?>
+                                            </td>
+                                            <?php endif ?>
                                         </tr>
                                         <?php endforeach ?>
                                         <tr>
@@ -106,6 +130,7 @@
                                             <td></td>
                                             <td style="text-align:right"><?=number_format($debt_total)?></td>
                                             <td style="text-align:right"><?=number_format($credit_total)?></td>
+                                            <td></td>
                                             <td></td>
                                         </tr>
                                     </tbody>

@@ -8,6 +8,7 @@ return [
         // 'mutasi kas' => 'crud/index?table=cash_flows',
         'jurnal' => 'journals/index',
         // 'modul' => 'crud/index?table=modules',
+        'merchant' => 'crud/index?table=merchants',
         'laporan' => [
             'Buku Besar' => 'reports/general',
             'Laba Rugi' => 'reports/profit',

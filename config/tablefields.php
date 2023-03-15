@@ -212,5 +212,20 @@ return [
             'label' => 'Deskripsi',
             'type'  => 'textarea'
         ],
+    ],
+    'merchants' => [
+        // 'report_id',
+        'debt_account_id'  => [
+            'label' => 'Akun Debet',
+            'type'  => 'text'
+        ],
+        'credit_account_id'  => [
+            'label' => 'Akun Kredit',
+            'type'  => 'text'
+        ],
+        'name'  => [
+            'label' => 'Nama',
+            'type'  => 'text'
+        ],
     ]
 ];
