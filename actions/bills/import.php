@@ -8,10 +8,6 @@ $fields = [
     'file' => [
         'label' => 'file',
         'type'  => 'file'
-    ],
-    'module' => [
-        'label' => 'Modul',
-        'type'  => 'options-obj:modules,id,name'
     ]
 ];
 
@@ -20,11 +16,8 @@ if(request() == 'POST')
     Validation::run([
         'file' => [
             'file','required','mime:xls,xlsx'
-        ],
-        'module' => [
-            'required'
         ]
-    ], array_merge($_POST[$table],$_FILES));
+    ], array_merge($_FILES));
 
     $inputFileName = $_FILES['file']['tmp_name'];
 
@@ -49,29 +42,69 @@ if(request() == 'POST')
 
     for ($row = 2; $row <= $highestRow; $row++) { 
         $code = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-        // check if code exists
-        if($db->exists('accounts',['code' => $code, 'report_id' => $report_id]))
-        {
-            $account = $db->single('accounts',['code' => $code, 'report_id' => $report_id]);
-            $date = $worksheet->getCellByColumnAndRow(6, $row)->getFormattedValue();
-            $date = DateTime::createFromFormat('d/m/Y', $date);
-            $data = [
-                'report_id' => $report_id,
-                'account_id' => $account->id,
-                'cash_type' => $worksheet->getCellByColumnAndRow(2, $row)->getValue(),
-                'amount' => $worksheet->getCellByColumnAndRow(3, $row)->getValue(),
-                'description' => $worksheet->getCellByColumnAndRow(4, $row)->getValue(),
-                'notes' => $worksheet->getCellByColumnAndRow(5, $row)->getValue(),
-                'date' => $date->format('Y-m-d'),
-            ];
+        $bill_code = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+        $amount = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+        $merchant = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+        $description = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
 
-            $db->insert('cash_flows', $data);
-            $success++;
-        }
-        else
+        // check if subject exists
+        if(!$db->exists('subjects',['code' => $code]))
         {
             $failed++;
+            continue;
         }
+        
+        if(!$db->exists('merchants',['name' => $merchant]))
+        {
+            $failed++;
+            continue;
+        }
+
+        $subject  = $db->single('subjects',['code' => $code]);
+        $merchant = $db->single('merchants',['name' => $merchant]);
+
+        $data = [
+            'subject_id' => $subject->id,
+            'merchant_id' => $merchant->id,
+            'report_id' => $report_id,
+            'bill_code' => $code.'-'.$bill_code,
+            'description' => $description,
+            'amount' => $amount,
+            'remaining_payment' => $amount,
+            'status' => 'BELUM LUNAS',
+        ];
+
+        $insert = $db->insert('bills',$data);
+
+        if($merchant->debt_bill_account_id)
+        {
+            // jurnal debet
+            $db->insert('journals',[
+                'report_id'  => $report_id,
+                'account_id' => $merchant->debt_bill_account_id,
+                'transaction_type' => 'Debit',
+                'amount' => $insert->amount,
+                'description' => $insert->description,
+                'transaction_code' => 'bill-'.$insert->bill_code,
+                'date' => date('Y-m-d')
+            ]);
+        }
+
+        if($merchant->credit_bill_account_id)
+        {
+            // jurnal kredit
+            $db->insert('journals',[
+                'report_id'  => $report_id,
+                'account_id' => $merchant->credit_bill_account_id,
+                'transaction_type' => 'Kredit',
+                'amount' => $insert->amount,
+                'description' => $insert->description,
+                'transaction_code' => 'bill-'.$insert->bill_code,
+                'date' => date('Y-m-d')
+            ]);
+        }
+
+        $success++;
     }
 
     set_flash_msg(['success'=>$success.' data berhasil di import.<br>'.$failed.' data gagal di import.']);

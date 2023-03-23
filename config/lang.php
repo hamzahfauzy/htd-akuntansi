@@ -10,5 +10,7 @@ return [
     'subjects' => 'Subjek',
     'journals' => 'Jurnal',
     'modules' => 'Modul',
-    'merchants' => 'Merchant'
+    'merchants' => 'Merchant',
+    'transactions' => 'Transaksi',
+    'transaction_items' => 'Item Transaksi',
 ];

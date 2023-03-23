@@ -31,6 +31,9 @@ class Database
         $this->query = "INSERT INTO $table";
         $fields = implode(',',array_keys($val));
         $vals = array_values($val);
+        $vals = array_map(function($v){
+            return addslashes($v);
+        }, $vals);
         $values = "'".implode("','",$vals)."'";
         $this->query .= "($fields)VALUES($values)";
         return $this->exec('insert');
@@ -86,14 +89,14 @@ class Database
         return $this->exec('single');
     }
 
-    function delete($table, $clause = [])
+    function delete($table, $clause = false)
     {
         $this->table = $table;
         $conn = $this->connection;
         $this->query = "DELETE FROM $table";
-        if(count($clause) > 0)
+        if($clause)
         {
-            $string = http_build_query($clause, '', ' AND ');
+            $string = $this->build_clause($clause);
             $this->query .= ' WHERE '.$string;
         }
         return $this->exec();
@@ -190,7 +193,9 @@ class Database
     {
         if(is_string($clause))
         {
-            return str_replace("WHERE","",$clause);
+            $clause = trim($clause);
+            if(strtolower(substr($clause, 0, 5)) == "where") $clause = substr($clause,5);
+            return $clause;
         }
         $logic = "AND";
         $count_clause = count($clause);

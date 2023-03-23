@@ -21,6 +21,8 @@
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="<?=asset('assets/css/bootstrap.min.css')?>">
 	<link rel="stylesheet" href="<?=asset('assets/css/atlantis.min.css')?>">
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="<?=asset('assets/css/select2-bootstrap.min.css')?>">
 
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="<?=asset('assets/css/demo.css')?>">
@@ -31,6 +33,12 @@
         padding-right: 10px !important;
         height: auto !important;
     }
+	.datatable-crud tbody tr td {
+		white-space: nowrap;
+	}
+	.form-control {
+		padding:.375rem .75rem !important;
+	}
     </style>
 </head>
 <body>

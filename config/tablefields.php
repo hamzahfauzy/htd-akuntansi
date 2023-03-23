@@ -152,9 +152,9 @@ return [
             'label' => 'Subjek',
             'type'  => 'options-obj:subjects,id,name'
         ],
-        'module_id' => [
-            'label' => 'Modul',
-            'type'  => 'options-obj:modules,id,name'
+        'merchant_id' => [
+            'label' => 'Merchant',
+            'type'  => 'options-obj:merchants,id,name'
         ],
         'bill_code' => [
             'label' => 'Kode',
@@ -194,38 +194,84 @@ return [
     'journals' => [
         'date' => [
             'label' => 'Tanggal',
-            'type'  => 'date'
+            'type'  => 'date',
+            'search' => false,
+        ],
+        'transaction_code' => [
+            'label' => 'Kode',
+            'type'  => 'text',
+            'search' => true,
         ],
         'account' => [
             'label' => 'Akun',
-            'type'  => 'text'
+            'type'  => 'text',
+            'search' => false,
         ],
         'debit' => [
             'label' => 'Debit',
-            'type'  => 'number'
+            'type'  => 'number',
+            'search' => false,
         ],
         'kredit' => [
             'label' => 'Kredit',
-            'type'  => 'number'
+            'type'  => 'number',
+            'search' => false,
         ],
         'description' => [
             'label' => 'Deskripsi',
-            'type'  => 'textarea'
+            'type'  => 'textarea',
+            'search' => true,
         ],
     ],
     'merchants' => [
         // 'report_id',
+        'debt_bill_account_id'  => [
+            'label' => 'Akun Debet Tagihan',
+            'type'  => 'text'
+        ],
+        'credit_bill_account_id'  => [
+            'label' => 'Akun Kredit Tagihan',
+            'type'  => 'text'
+        ],
         'debt_account_id'  => [
-            'label' => 'Akun Debet',
+            'label' => 'Akun Debet Pembayaran',
             'type'  => 'text'
         ],
         'credit_account_id'  => [
-            'label' => 'Akun Kredit',
+            'label' => 'Akun Kredit Pembayaran',
             'type'  => 'text'
         ],
         'name'  => [
             'label' => 'Nama',
             'type'  => 'text'
         ],
+    ],
+    'transactions' => [
+        'subject_id' => [
+            'label' => 'Subjek',
+            'type'  => 'options-obj:subjects,id,name'
+        ],
+        'transaction_code' => [
+            'label' => 'Kode Transaksi',
+            'type'  => 'text'
+        ],
+        'total' => [
+            'label' => 'Total',
+            'type'  => 'number'
+        ],
+        'created_at' => [
+            'label' => 'Tanggal',
+            'type'  => 'datetime-local'
+        ]
+    ],
+    'transaction_items' => [
+        'amount' => [
+            'label' => 'Jumlah',
+            'type'  => 'number',
+        ],
+        'description' => [
+            'label' => 'Deskripsi',
+            'type'  => 'text',
+        ]
     ]
 ];

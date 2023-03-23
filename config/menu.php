@@ -18,9 +18,10 @@ return [
         ],
     ],
     'keuangan' => [
-        'subjek' => 'crud/index?table=subjects',
         'group' => 'crud/index?table=groups',
+        'subjek' => 'crud/index?table=subjects',
         'tagihan' => 'crud/index?table=bills',
+        'transaksi' => 'crud/index?table=transactions',
     ],
     'kontak' => 'crud/index?table=contacts',
     'pengguna'  => [

@@ -25,6 +25,8 @@
 	<!-- jQuery UI -->
 	<script src="<?=asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')?>"></script>
 	<script src="<?=asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')?>"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
 	<!-- jQuery Scrollbar -->
 	<script src="<?=asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')?>"></script>
@@ -51,13 +53,17 @@
 
 	<!-- Sweet Alert -->
 	<script src="<?=asset('assets/js/plugin/sweetalert/sweetalert.min.js')?>"></script>
+	
+	<script src="<?=asset('assets/js/plugin/select2/select2.full.min.js')?>"></script>
 
 	<!-- Atlantis JS -->
 	<script src="<?=asset('assets/js/atlantis.min.js')?>"></script>
 
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
+	<?php if(get_route() == 'default/index'): ?>
 	<script src="<?=asset('assets/js/setting-demo.js')?>"></script>
 	<script src="<?=asset('assets/js/demo.js')?>"></script>
+	<?php endif ?>
 	<script src="<?=asset('assets/js/plugin/datatables-pagingtype/full_numbers_no_ellipses.js')?>"></script>
 	<script>
 		$('.datatable-crud').dataTable({
@@ -71,13 +77,14 @@
 			ajax: location.href
 		})
 		$('.datatable').dataTable();
+		<?php if(get_route() == 'default/index'): ?>
 		Circles.create({
 			id:'circles-1',
 			radius:45,
-			value:60,
-			maxValue:100,
+			value:<?=$subjects?>,
+			maxValue:<?=$subjects?>,
 			width:7,
-			text: 5,
+			text: <?=$subjects?>,
 			colors:['#f1f1f1', '#FF9E27'],
 			duration:400,
 			wrpClass:'circles-wrp',
@@ -89,10 +96,10 @@
 		Circles.create({
 			id:'circles-2',
 			radius:45,
-			value:70,
-			maxValue:100,
+			value:<?=$masters?>,
+			maxValue:<?=$masters?>,
 			width:7,
-			text: 36,
+			text: <?=$masters?>,
 			colors:['#f1f1f1', '#2BB930'],
 			duration:400,
 			wrpClass:'circles-wrp',
@@ -104,10 +111,10 @@
 		Circles.create({
 			id:'circles-3',
 			radius:45,
-			value:40,
-			maxValue:100,
+			value:<?=$accounts?>,
+			maxValue:<?=$accounts?>,
 			width:7,
-			text: 12,
+			text: <?=$accounts?>,
 			colors:['#f1f1f1', '#F25961'],
 			duration:400,
 			wrpClass:'circles-wrp',
@@ -162,6 +169,67 @@
 			lineWidth: '2',
 			lineColor: '#ffa534',
 			fillColor: 'rgba(255, 165, 52, .14)'
+		});
+
+		<?php endif ?>
+
+		$(".select-subject").select2({
+			theme: "bootstrap",
+			width: '100%',
+			minimumInputLength: 2,
+			ajax: {
+				url: '<?=routeTo('api/subjects/lists')?>',
+				dataType: "json",
+				type: "GET",
+				data: function (params) {
+
+					var queryParameters = {
+						keyword: params.term
+					}
+					return queryParameters;
+				},
+				processResults: function (data) {
+					return {
+						results: $.map(data, function (item) {
+							return {
+								text: item.subject_name,
+								id: item.id
+							}
+						})
+					};
+				}
+			}
+		});
+
+		$(".select-bill").select2({
+			theme: "bootstrap",
+			width: '100%',
+			minimumInputLength: 2,
+			ajax: {
+				url: '<?=routeTo('api/bills/lists')?>',
+				dataType: "json",
+				type: "GET",
+				data: function (params) {
+
+					var subject_id = $(".select-subject").val()
+
+					var queryParameters = {
+						keyword: params.term,
+						subject_id:subject_id
+					}
+					return queryParameters;
+				},
+				processResults: function (data) {
+					return {
+						results: $.map(data, function (item) {
+							return {
+								text: item.bill_name,
+								id: item.id
+							}
+						})
+					};
+				}
+			}
 		});
 	</script>
 </body>

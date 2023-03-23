@@ -60,6 +60,8 @@ if($accounts)
         return $d;
     }, $modal);
 
-    return compact('aktiva','hutang','modal');
+    $laba_rugi = get_laba_rugi();
+
+    return compact('aktiva','hutang','modal','laba_rugi');
 }
 

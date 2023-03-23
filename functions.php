@@ -712,3 +712,97 @@ function activeMaster()
     $db    = new Database($conn);
     return $db->single('reports',['is_active'=>'YA']);
 }
+
+function get_total_pendapatan()
+{
+    $conn  = conn();
+    $db    = new Database($conn);
+
+    $report_id = activeMaster() ? activeMaster()->id : 0;
+
+    if($report_id == 0) return 0;
+
+    $params = [
+        'report_id' => $report_id,
+        'code' => ['LIKE','4%'],
+        'report_position' => 'LR'
+    ];
+
+    $pendapatan = $db->all('accounts', $params,[
+        'code' => 'ASC'
+    ]);
+
+    $pendapatan = array_map(function($d) use ($db) {
+        $db->query = "SELECT SUM(amount) as TOTAL FROM journals WHERE account_id = $d->id AND transaction_type = 'Debit'";
+        $d->debt = $db->exec('single')->TOTAL;
+        
+        $db->query = "SELECT SUM(amount) as TOTAL FROM journals WHERE account_id = $d->id AND transaction_type = 'Kredit'";
+        $d->credit = $db->exec('single')->TOTAL;
+
+        return $d;
+    }, $pendapatan);
+
+    $total_debt = 0; 
+    $total_credit = 0;
+    foreach($pendapatan as $index => $d)
+    {
+        $total_debt += $d->debt;
+        $total_credit += $d->credit;
+    }
+
+    $total_pendapatan = $total_credit-$total_debt;
+
+    return $total_pendapatan;
+}
+
+function get_total_beban()
+{
+    $conn  = conn();
+    $db    = new Database($conn);
+
+    $report_id = activeMaster() ? activeMaster()->id : 0;
+
+    if($report_id == 0) return 0;
+
+    $params = [
+        'report_id' => $report_id,
+        'code' => ['LIKE','4%'],
+        'report_position' => 'LR'
+    ];
+
+    $params['code'] = ['LIKE','5%'];
+    $beban = $db->all('accounts', $params,[
+        'code' => 'ASC'
+    ]);
+
+    $beban = array_map(function($d) use ($db) {
+        $db->query = "SELECT SUM(amount) as TOTAL FROM journals WHERE account_id = $d->id AND transaction_type = 'Debit'";
+        $d->debt = $db->exec('single')->TOTAL;
+        
+        $db->query = "SELECT SUM(amount) as TOTAL FROM journals WHERE account_id = $d->id AND transaction_type = 'Kredit'";
+        $d->credit = $db->exec('single')->TOTAL;
+
+        return $d;
+    }, $beban);
+
+    $total_debt = 0; 
+    $total_credit = 0;
+    foreach($beban as $index => $d)
+    {
+        $total_debt += $d->debt;
+        $total_credit += $d->credit;
+    }
+
+    $total_beban = $total_debt-$total_credit;
+
+    return $total_beban;
+}
+
+function get_laba_rugi()
+{
+    
+    $total_pendapatan = get_total_pendapatan();
+    $total_beban = get_total_beban();
+
+    return $total_pendapatan-$total_beban;
+}

@@ -64,7 +64,7 @@
                                             <td style="font-weight:bold"><?=number_format($total_credit,0,',','.')?></td>
                                         </tr>
                                         <tr>
-                                            <td style="font-weight:bold">Total Harta</td>
+                                            <td style="font-weight:bold">Total Aktiva</td>
                                             <td style="font-weight:bold" colspan="5"><?=number_format($total_aktiva,0,',','.')?></td>
                                         </tr>
                                     
@@ -108,7 +108,6 @@
                                         </tr>
                                         <?php 
                                         endforeach; 
-                                        $total_modal = $total_credit-$total_debt;
                                         ?>
                                         <tr>
                                             <td style="font-weight:bold">Sub Total</td>
@@ -116,8 +115,21 @@
                                             <td style="font-weight:bold"><?=number_format($total_credit,0,',','.')?></td>
                                         </tr>
                                         <tr>
+                                            <td style="font-weight:bold">Laba Rugi</td>
+                                            <td style="font-weight:bold" colspan="5"><?=number_format($laba_rugi,0,',','.')?></td>
+                                        </tr>
+                                        <?php $total_modal = ($total_credit-$total_debt) + $laba_rugi; ?>
+                                        <tr>
                                             <td style="font-weight:bold">Total Modal</td>
                                             <td style="font-weight:bold" colspan="5"><?=number_format($total_modal,0,',','.')?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight:bold">Total Pasiva</td>
+                                            <td style="font-weight:bold" colspan="5"><?=number_format($total_hutang+$total_modal,0,',','.')?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight:bold">Neraca</td>
+                                            <td style="font-weight:bold" colspan="5"><?=number_format($total_aktiva-($total_hutang+$total_modal),0,',','.')?></td>
                                         </tr>
                                         
                                     </tbody>

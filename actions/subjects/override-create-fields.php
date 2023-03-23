@@ -10,6 +10,11 @@ $fields['password'] = [
     'type'  => 'password'
 ];
 
+$fields['group'] = [
+    'label' => 'Group',
+    'type'  => 'options-obj:groups,id,name'
+];
+
 $fields['role'] = [
     'label' => 'Role',
     'type'  => 'options-obj:roles,id,name'

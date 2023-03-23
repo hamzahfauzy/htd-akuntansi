@@ -62,7 +62,7 @@ if(isset($_GET['draw']))
     
     foreach($data as $key => $d)
     {
-        $results[$key][] = $key+1;
+        $results[$key][] = $key+($start+1);
         foreach($columns as $col)
         {
             $field = '';
@@ -106,12 +106,16 @@ if(isset($_GET['draw']))
             // $table, $d (data object)
             $action .= require '../actions/'.$table.'/action-button.php';
         }
+
+        if($table != 'transactions'):
         if(
             ($table == 'reports' && is_allowed(get_route_path('crud/edit',['table'=>$table]),auth()->user->id)) ||
             ($table != 'reports' && is_allowed(get_route_path('crud/edit',['table'=>$table]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
             ):
             $action .= ' <a href="'.routeTo('crud/edit',['table'=>$table,'id'=>$d->id]).'" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>';
         endif;
+        endif;
+
         if(
             ($table == 'reports' && is_allowed(get_route_path('crud/delete',['table'=>$table]),auth()->user->id)) ||
             ($table != 'reports' && is_allowed(get_route_path('crud/delete',['table'=>$table]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')

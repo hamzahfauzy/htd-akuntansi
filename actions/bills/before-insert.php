@@ -1,5 +1,11 @@
 <?php
 
+Validation::run([
+    'bill_code' => [
+        'required','unique:bills'
+    ]
+], $_POST[$table]);
+
 $report_id = activeMaster()->id;
 $_POST[$table]['report_id'] = $report_id;
 $sent_notif = false;
@@ -17,5 +23,5 @@ else
         $_POST[$table]['notification_date'] = date('Y-m-d');
     }
 }
-
+$_POST[$table]['remaining_payment'] = $_POST[$table]['amount'];
 unset($_POST[$table]['sent_notif']);

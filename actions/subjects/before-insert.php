@@ -21,3 +21,7 @@ $db->insert('user_roles',[
 ]);
 
 $_POST[$table]['user_id'] = $user->id;
+
+$_POST['group_id'] = $_POST[$table]['group'];
+
+unset($_POST[$table]['group']);

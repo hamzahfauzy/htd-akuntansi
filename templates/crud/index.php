@@ -9,20 +9,30 @@
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
                         <?php if(
-                            (in_array($table,['accounts','cash_flows','subjects','bills']) && is_allowed(get_route_path($table.'/import',[]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
+                            (in_array($table,['accounts','cash_flows','subjects','bills','transactions']) && is_allowed(get_route_path($table.'/import',[]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
                             ): ?>
                             <a href="<?=routeTo($table.'/import')?>" class="btn btn-info btn-round">Import Data</a>
                         <?php endif ?>
-                        <?php if(
-                            (in_array($table,['bills']) && is_allowed(get_route_path($table.'/generate',[]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
+
+                        <?php /* if(
+                            (in_array($table,['bills']) && is_allowed(get_route_path($table.'/bulk-create',[]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
                             ): ?>
-                            <a href="<?=routeTo($table.'/generate')?>" class="btn btn-primary btn-round">Generate Data</a>
+                            <a href="<?=routeTo($table.'/bulk-create')?>" class="btn btn-primary btn-round">Bulk Create</a>
+                        <?php endif */ ?>
+
+                        <?php if(
+                            (in_array($table,['transactions']) && is_allowed(get_route_path($table.'/payment-panel',[]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
+                            ): ?>
+                            <a href="<?=routeTo($table.'/payment-panel')?>" class="btn btn-primary btn-round">Panel Transaksi</a>
                         <?php endif ?>
+
+                        <?php if(!in_array($table,['transactions','transaction_items'])): ?>
                         <?php if(
                             ($table == 'reports' && is_allowed(get_route_path('crud/create',['table'=>$table]),auth()->user->id)) ||
                             ($table != 'reports' && is_allowed(get_route_path('crud/create',['table'=>$table]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
                             ): ?>
                             <a href="<?=routeTo('crud/create',['table'=>$table])?>" class="btn btn-secondary btn-round">Buat <?=_ucwords(__($table))?></a>
+                        <?php endif ?>
                         <?php endif ?>
 
                         <?php if(

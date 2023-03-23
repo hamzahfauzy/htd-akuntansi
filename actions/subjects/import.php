@@ -42,6 +42,7 @@ if(request() == 'POST')
     //inilah looping untuk membaca cell dalam file excel,perkolom
     $success = 0;
     $failed  = 0;
+    $failed_code = [];
     $report_id = activeMaster()->id;
 
     $conn = conn();
@@ -49,9 +50,11 @@ if(request() == 'POST')
 
     for ($row = 2; $row <= $highestRow; $row++) { 
         $code = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+        $code = trim($code);
         // check if code exists
         if($db->exists('subjects',['code' => $code ]))
         {
+            $failed_code[] = $code;
             $failed++;
             continue;
         }
@@ -61,7 +64,8 @@ if(request() == 'POST')
             'name' => $worksheet->getCellByColumnAndRow(2, $row)->getValue(),
             'address' => $worksheet->getCellByColumnAndRow(3, $row)->getValue(),
             'phone' => $worksheet->getCellByColumnAndRow(4, $row)->getValue(),
-            'email' => $worksheet->getCellByColumnAndRow(5, $row)->getValue()
+            'email' => $worksheet->getCellByColumnAndRow(5, $row)->getValue(),
+            'group' => $worksheet->getCellByColumnAndRow(6, $row)->getValue()
         ];
 
         if(empty($data['phone']))
@@ -73,6 +77,11 @@ if(request() == 'POST')
         {
             unset($data['email']);
         }
+        
+        if(empty($data['group']))
+        {
+            unset($data['group']);
+        }
 
         $user = $db->insert('users',[
             'name' => $data['name'],
@@ -81,15 +90,25 @@ if(request() == 'POST')
         ]);
 
         $data['user_id'] = $user->id;
-        $db->insert($table, $data);
+        $subject = $db->insert($table, array_filter($data, function($key){ return $key != 'group'; }, ARRAY_FILTER_USE_KEY));
         $db->insert('user_roles',[
             'user_id' => $user->id,
             'role_id' => $_POST[$table]['role']
         ]);
+
+        if(isset($data['group']) && $db->exists('groups',['name'=>$data['group']]))
+        {
+            $group = $db->single('groups',['name' => $data['group']]);
+            $db->insert('subject_groups',[
+                'user_id' => $user->id,
+                'group_id'   => $group->id,
+                'report_id'  => $report_id
+            ]);
+        }
         $success++;
     }
 
-    set_flash_msg(['success'=>$success.' data berhasil di import.<br>'.$failed.' data gagal di import.']);
+    set_flash_msg(['success'=>$success.' data berhasil di import.<br>'.$failed.' data gagal di import. ('.implode(',',$failed_code).')']);
     header('location:'.routeTo('crud/index',['table'=>'subjects']));
 }
 
