@@ -4,7 +4,6 @@ Page::set_title('Panel Transaksi');
 
 if(request() == 'POST')
 {
-    // print_r($_POST);
     $conn = conn();
     $db   = new Database($conn);
 
@@ -33,9 +32,9 @@ if(request() == 'POST')
         ]);
 
         // update bill payment
-        $sisa_pembayaran = $bill->amount-$insert->amount;
+        $sisa_pembayaran = $bill->remaining_payment-$insert->amount;
         $status = $sisa_pembayaran == 0 ? 'LUNAS' : 'BELUM LUNAS';
-        $db->update('bills',[
+        $bill = $db->update('bills',[
             'remaining_payment' => $sisa_pembayaran,
             'status' => $status
         ],[

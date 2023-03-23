@@ -56,13 +56,13 @@ if(request() == 'POST')
         
         $subject  = $db->single('subjects',['code' => $code]);
 
-        if(!$db->exists('bills',['code' => $subject->code.'-'.$bill_code]))
+        if(!$db->exists('bills',['bill_code' => $subject->code.'-'.$bill_code]))
         {
             $failed++;
             continue;
         }
 
-        $bill = $db->single('bills',['code' => $subject->code.'-'.$bill_code]);
+        $bill = $db->single('bills',['bill_code' => $subject->code.'-'.$bill_code]);
 
         $transaction = $db->insert('transactions',[
             'subject_id' => $subject->id,

@@ -6,7 +6,7 @@ $db   = new Database($conn);
 $report_id = activeMaster()?activeMaster()->id:0;
 $subject = $db->single('subjects',['id'=> $_GET['subject_id']]);
 
-$where = 'WHERE bills.report_id='.(activeMaster()?activeMaster()->id:0).' AND bills.subject_id='.$subject->id.'';
+$where = 'WHERE bills.status="BELUM LUNAS" AND bills.report_id='.(activeMaster()?activeMaster()->id:0).' AND bills.subject_id='.$subject->id.'';
 if(isset($_GET['keyword']))
 {
     $keyword = $_GET['keyword'];

@@ -2,6 +2,7 @@
 
 return [
     'env'          => 'dev',
+    'api_token'    => '',
     'app_protocol' => 'http',
     'app_domain'   => 'localhost',
     'app_port'     => '8080',
