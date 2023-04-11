@@ -9,6 +9,12 @@
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
                         <?php if(
+                            (is_allowed(get_route_path('accounts/clear',[]),auth()->user->id) && !$parent)
+                            ): ?>
+                            <a href="<?=routeTo('accounts/clear')?>" onclick="if(confirm('apakah anda yakin akan menghapus seluruh data akun aktif ?')){return true}else{return false}" class="btn btn-danger btn-round">Clear Data</a>
+                        <?php endif ?>
+
+                        <?php if(
                             (is_allowed(get_route_path('accounts/index',[]),auth()->user->id) && $parent)
                             ): ?>
                             <a href="<?=routeTo('accounts/index', $parent->parent_id ? ['parent_id'=>$parent->parent_id] : [] )?>" class="btn btn-warning btn-round">Kembali</a>

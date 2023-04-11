@@ -11,6 +11,7 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'options') {
 
 // $isApiV1 = startWith($route, 'api/v1/');
 $nonAuthRoute = !in_array($route,[
+    'api/accounts/lists',
     'api/bills/lists',
     'api/bills/unpayment',
     'api/subjects/lists',

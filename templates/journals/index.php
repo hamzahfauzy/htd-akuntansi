@@ -9,15 +9,15 @@
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
                         <?php if(
-                            (is_allowed(get_route_path('journals/import',[]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
-                            ): ?>
-                            <a href="<?=routeTo('journals/import')?>" class="btn btn-info btn-round">Import Data</a>
-                        <?php endif ?>
-
-                        <?php if(
                             (is_allowed(get_route_path('journals/clear',[]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
                             ): ?>
                             <a href="<?=routeTo('journals/clear')?>" class="btn btn-danger btn-round">Clear Data</a>
+                        <?php endif ?>
+
+                        <?php if(
+                            (is_allowed(get_route_path('journals/import',[]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
+                            ): ?>
+                            <a href="<?=routeTo('journals/import')?>" class="btn btn-info btn-round">Import Data</a>
                         <?php endif ?>
 
                         <?php if(

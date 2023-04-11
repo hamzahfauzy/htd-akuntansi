@@ -22,6 +22,7 @@ return [
         'subjek' => 'crud/index?table=subjects',
         'tagihan' => 'crud/index?table=bills',
         'transaksi' => 'crud/index?table=transactions',
+        'rekapitulasi' => 'reports/recaps'
     ],
     'kontak' => 'crud/index?table=contacts',
     'pengguna'  => [

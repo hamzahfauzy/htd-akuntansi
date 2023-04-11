@@ -42,19 +42,20 @@ if(request() == 'POST')
 
     for ($row = 2; $row <= $highestRow; $row++) { 
         $code = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+        $clause = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
         $transaction_code = 'TRX-'.strtotime('now');
         $amount = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
         $bill_code = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
         $description = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
 
         // check if subject exists
-        if(!$db->exists('subjects',['code' => $code]))
+        if(!$db->exists('subjects',[$clause => $code]))
         {
             $failed++;
             continue;
         }
         
-        $subject  = $db->single('subjects',['code' => $code]);
+        $subject  = $db->single('subjects',[$clause => $code]);
 
         if(!$db->exists('bills',['bill_code' => $subject->code.'-'.$bill_code]))
         {
@@ -63,6 +64,13 @@ if(request() == 'POST')
         }
 
         $bill = $db->single('bills',['bill_code' => $subject->code.'-'.$bill_code]);
+        $sisa = $bill->remaining_payment - $amount;
+        $db->update('bills',[
+            'remaining_payment' => $sisa,
+            'status' => $sisa == 0 ? 'LUNAS' : 'BELUM LUNAS'
+        ],[
+            'id' => $bill->id
+        ]);
 
         $transaction = $db->insert('transactions',[
             'subject_id' => $subject->id,

@@ -22,7 +22,7 @@
                                 <div class="d-flex mb-2">
                                     <div class="flex-grow-1 mr-2">
                                         <label for="">Subjek</label>
-                                        <select name="subject_id" class="form-control select-subject"></select>
+                                        <select name="subject_id" class="form-control select-subject" required></select>
                                     </div>
         
                                     <div class="flex-grow-1">
@@ -44,13 +44,13 @@
                                         <tr class="transaction-items">
                                             <td><button type="button" onclick="addItem()" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button></td>
                                             <td>
-                                                <select name="bill_id[]" class="form-control select-bill"></select>
+                                                <select name="bill_id[]" class="form-control select-bill" required></select>
                                             </td>
                                             <td>
-                                                <input name="amount[]" type="number" class="form-control">
+                                                <input name="amount[]" type="number" class="form-control payment_value" required>
                                             </td>
                                             <td>
-                                                <input name="description[]" type="text" class="form-control">
+                                                <input name="description[]" type="text" class="form-control" required>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -72,13 +72,13 @@
         var html = `  <tr class="transaction-items" id="item-${r}">
                             <td><button type="button" onclick="removeItem('#item-${r}')" class="btn btn-danger btn-sm"><i class="fas fa-minus"></i></button></td>
                             <td>
-                                <select name="bill_id[]" class="form-control select-bill" id="select-${r}"></select>
+                                <select name="bill_id[]" class="form-control select-bill" id="select-${r}" required></select>
                             </td>
                             <td>
-                                <input name="amount[]" type="number" class="form-control">
+                                <input name="amount[]" type="number" class="form-control payment_value-${r}" required>
                             </td>
                             <td>
-                                <input name="description[]" type="text" class="form-control">
+                                <input name="description[]" type="text" class="form-control" required>
                             </td>
                         </tr>`
         var template = document.createElement('template');
@@ -104,17 +104,25 @@
                     }
                     return queryParameters;
                 },
-                processResults: function (data) {
-                    return {
-                        results: $.map(data, function (item) {
-                            return {
-                                text: item.bill_name,
-                                id: item.id
-                            }
-                        })
-                    };
-                }
-            }
+                templateSelection: function(container) {
+					$(container.element).attr("data-remaining", container.remaining_payment);
+					return container.text;
+				},
+				processResults: function (data) {
+					return {
+						results: $.map(data, function (item) {
+							return {
+								text: item.bill_name,
+								remaining_payment : item.remaining_payment,
+								id: item.id
+							}
+						})
+					};
+				}
+			}
+		}).on("select2:select", function (e) {
+            var remaining_payment = e.params.data.remaining_payment
+			$('.payment_value-'+r).val(remaining_payment)
         });
     }
 

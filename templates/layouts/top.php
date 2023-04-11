@@ -39,6 +39,20 @@
 	.form-control {
 		padding:.375rem .75rem !important;
 	}
+	<?php if(get_route() == 'crud/index' && $_GET['table'] == 'bills'): ?>
+	.select2-selection__rendered {
+	    line-height: 33px !important;
+	}
+	.select2-selection__clear {
+	    line-height: 30px !important;
+	}
+	.select2-container .select2-selection--single {
+		height: 33px !important;
+	}
+	.select2-selection__arrow {
+		height: 33px !important;
+	}
+	<?php endif ?>
     </style>
 </head>
 <body>

@@ -5,6 +5,8 @@ $db   = new Database($conn);
 
 $accounts = $db->all('accounts',['report_position' => 'LR', 'report_id' => activeMaster()?activeMaster()->id:0]);
 $journals = null;
+$pendapatan = [];
+$beban    = [];
 
 if($accounts)
 {
@@ -65,6 +67,6 @@ if($accounts)
         return $d;
     }, $beban);
 
-    return compact('pendapatan','beban');
 }
 
+return compact('pendapatan','beban');

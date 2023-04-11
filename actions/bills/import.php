@@ -42,13 +42,14 @@ if(request() == 'POST')
 
     for ($row = 2; $row <= $highestRow; $row++) { 
         $code = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+        $clause = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
         $bill_code = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
         $amount = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
         $merchant = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
         $description = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
 
         // check if subject exists
-        if(!$db->exists('subjects',['code' => $code]))
+        if(!$db->exists('subjects',[$clause => $code]))
         {
             $failed++;
             continue;
@@ -60,14 +61,14 @@ if(request() == 'POST')
             continue;
         }
 
-        $subject  = $db->single('subjects',['code' => $code]);
+        $subject  = $db->single('subjects',[$clause => $code]);
         $merchant = $db->single('merchants',['name' => $merchant]);
 
         $data = [
             'subject_id' => $subject->id,
             'merchant_id' => $merchant->id,
             'report_id' => $report_id,
-            'bill_code' => $code.'-'.$bill_code,
+            'bill_code' => $subject->code.'-'.$bill_code,
             'description' => $description,
             'amount' => $amount,
             'remaining_payment' => $amount,

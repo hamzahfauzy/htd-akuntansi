@@ -5,6 +5,10 @@ $db   = new Database($conn);
 
 $accounts = $db->all('accounts',['report_position' => 'LR', 'report_id' => activeMaster()?activeMaster()->id:0]);
 $journals = null;
+$aktiva = [];
+$modal  = [];
+$hutang = [];
+$laba_rugi = 0;
 
 if($accounts)
 {
@@ -62,6 +66,6 @@ if($accounts)
 
     $laba_rugi = get_laba_rugi();
 
-    return compact('aktiva','hutang','modal','laba_rugi');
 }
 
+return compact('aktiva','hutang','modal','laba_rugi');

@@ -59,6 +59,15 @@ if(request() == 'POST')
             continue;
         }
 
+        $email = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+        // check if email is exists
+        if($db->exists('subjects',['email' => $email ]))
+        {
+            $failed_code[] = $email;
+            $failed++;
+            continue;
+        }
+
         $data = [
             'code' => $code,
             'name' => $worksheet->getCellByColumnAndRow(2, $row)->getValue(),
@@ -96,9 +105,17 @@ if(request() == 'POST')
             'role_id' => $_POST[$table]['role']
         ]);
 
-        if(isset($data['group']) && $db->exists('groups',['name'=>$data['group']]))
+        if(isset($data['group']))
         {
-            $group = $db->single('groups',['name' => $data['group']]);
+            if($db->exists('groups',['name'=>$data['group']]))
+            {
+                $group = $db->single('groups',['name' => $data['group']]);
+            }
+            else
+            {
+                $group = $db->insert('groups',['name' => $data['group'], 'report_id'  => $report_id]);
+            }
+            
             $db->insert('subject_groups',[
                 'user_id' => $user->id,
                 'group_id'   => $group->id,

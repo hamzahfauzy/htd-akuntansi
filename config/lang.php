@@ -9,6 +9,7 @@ return [
     'groups' => 'Group',
     'subjects' => 'Subjek',
     'journals' => 'Jurnal',
+    'contacts' => 'Kontak',
     'modules' => 'Modul',
     'merchants' => 'Merchant',
     'transactions' => 'Transaksi',

@@ -8,12 +8,12 @@ $error_msg = get_flash_msg('error');
 $old = get_flash_msg('old');
 $fields = config('fields')[$table];
 
-if(file_exists('../actions/'.$table.'/override-edit-fields.php'))
-    $fields = require '../actions/'.$table.'/override-edit-fields.php';
-
 $data = $db->single($table,[
     'id' => $_GET['id']
 ]);
+
+if(file_exists('../actions/'.$table.'/override-edit-fields.php'))
+    $fields = require '../actions/'.$table.'/override-edit-fields.php';
 
 if(file_exists('../actions/'.$table.'/override-edit-data.php'))
 {

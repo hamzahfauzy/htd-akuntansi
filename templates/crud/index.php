@@ -45,6 +45,13 @@
             </div>
         </div>
         <div class="page-inner mt--5">
+            <?php
+            $template = '../templates/'. $table .'/before-content.php'; 
+            if(file_exists($template))
+            {
+                require $template;
+            }
+            ?>
             <div class="row row-card-no-pd">
                 <div class="col-md-12">
                     <div class="card">

@@ -7,6 +7,11 @@ $db   = new Database($conn);
 $success_msg = get_flash_msg('success');
 $fields = config('fields')[$table];
 
+$additional_data = [];
+
+if(file_exists('../actions/'.$table.'/additional-index-data.php'))
+    $additional_data = require '../actions/'.$table.'/additional-index-data.php';
+
 if(file_exists('../actions/'.$table.'/override-index-fields.php'))
     $fields = require '../actions/'.$table.'/override-index-fields.php';
 
@@ -34,7 +39,7 @@ if(isset($_GET['draw']))
         $_where = [];
         foreach($search_columns as $col)
         {
-            $_where[] = "$col LIKE '%$search%'";
+            $_where[] = "$table.$col LIKE '%$search%'";
         }
 
         $where = "WHERE (".implode(' OR ',$_where).")";
@@ -138,5 +143,6 @@ if(isset($_GET['draw']))
 return [
     'table' => $table,
     'success_msg' => $success_msg,
-    'fields' => $fields
+    'fields' => $fields,
+    'additional_data' => $additional_data
 ];

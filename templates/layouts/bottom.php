@@ -66,6 +66,34 @@
 	<?php endif ?>
 	<script src="<?=asset('assets/js/plugin/datatables-pagingtype/full_numbers_no_ellipses.js')?>"></script>
 	<script>
+		<?php if(get_route() == 'crud/index' && $_GET['table'] == 'bills'): ?>
+		window.billData = $('.datatable-crud').DataTable({
+			stateSave:true,
+			pagingType: 'full_numbers_no_ellipses',
+			processing: true,
+			// searching: false,
+			search: {
+				return: true
+			},
+			serverSide: true,
+			ajax: {
+				url: location.href,
+				data: function(data){
+					// Read values
+					var group = $('select[name=group]').val()
+					var subject = $('select[name=subject]').val()
+					var merchant = $('select[name=merchant]').val()
+					var status = $('select[name=status]').val()
+
+					// Append to data
+					data.searchByGroup = group
+					data.searchBySubject = subject
+					data.searchByMerchant = merchant
+					data.searchByStatus = status
+				}
+			}
+		})
+		<?php else: ?>
 		$('.datatable-crud').dataTable({
 			stateSave:true,
 			pagingType: 'full_numbers_no_ellipses',
@@ -76,7 +104,12 @@
 			serverSide: true,
 			ajax: location.href
 		})
+		<?php endif ?>
 		$('.datatable').dataTable();
+		$(".select2").select2({
+			allowClear: true,
+			placeholder: 'Pilih'
+		});
 		<?php if(get_route() == 'default/index'): ?>
 		Circles.create({
 			id:'circles-1',
@@ -202,6 +235,8 @@
 		});
 
 		$(".select-bill").select2({
+			allowClear: true,
+			placeholder: 'Pilih',
 			theme: "bootstrap",
 			width: '100%',
 			minimumInputLength: 2,
@@ -219,11 +254,51 @@
 					}
 					return queryParameters;
 				},
+				templateSelection: function(container) {
+					$(container.element).attr("data-remaining", container.remaining_payment);
+					return container.text;
+				},
 				processResults: function (data) {
 					return {
 						results: $.map(data, function (item) {
 							return {
 								text: item.bill_name,
+								remaining_payment : item.remaining_payment,
+								id: item.id
+							}
+						})
+					};
+				}
+			}
+		}).on("select2:select", function (e) {
+            var remaining_payment = e.params.data.remaining_payment
+			$('.payment_value').val(remaining_payment)
+        });
+
+		<?php if(in_array(get_route(),['crud/create','crud/edit']) && (isset($_GET['table']) && $_GET['table'] == 'merchants')): ?>
+		$("select").select2({
+			allowClear: true,
+			placeholder: 'Pilih',
+			theme: "bootstrap",
+			width: '100%',
+			minimumInputLength: 2,
+			ajax: {
+				url: '<?=routeTo('api/accounts/lists')?>',
+				dataType: "json",
+				type: "GET",
+				data: function (params) {
+
+					var queryParameters = {
+						keyword: params.term,
+					}
+
+					return queryParameters;
+				},
+				processResults: function (data) {
+					return {
+						results: $.map(data.data, function (item) {
+							return {
+								text: item.code+' '+item.name,
 								id: item.id
 							}
 						})
@@ -231,6 +306,7 @@
 				}
 			}
 		});
+		<?php endif ?>
 	</script>
 </body>
 </html>
