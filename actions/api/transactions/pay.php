@@ -15,9 +15,18 @@ Validation::run([
 
 $conn = conn();
 $db   = new Database($conn);
+$amount = $_POST['amount'];
 
 $transaction_code = 'TRX-'.strtotime('now');
 $bill = $db->single('bills',['code' => $_POST['bill_code']]);
+$sisa = $bill->remaining_payment - $amount;
+$db->update('bills',[
+    'remaining_payment' => $sisa,
+    'status' => $sisa == 0 ? 'LUNAS' : 'BELUM LUNAS'
+],[
+    'id' => $bill->id
+]);
+
 $merchant = $db->single('merchants',['id' => $bill->merchant_id]);
 $subject = $db->single('subjects',['id' => $bill->subject_id]);
 
@@ -25,7 +34,7 @@ $transaction = $db->insert('transactions',[
     'subject_id' => $subject->id,
     'report_id'  => $bill->report_id,
     'transaction_code' => $transaction_code,
-    'total' => $_POST['amount']
+    'total' => $amount
 ]);
 
 $insert = $db->insert('transaction_items',[
@@ -64,4 +73,8 @@ if($merchant->credit_account_id)
     ]);
 }
 
+echo json_encode([
+    'success' => true,
+    'message' => 'payment for '.$_POST['bill_code'].' success'
+]);
 die();

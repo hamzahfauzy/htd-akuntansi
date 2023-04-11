@@ -23,9 +23,6 @@ $groups = array_map(function($g) use ($db){
 
 }, $groups);
 
-
-
-
 echo json_encode([
     'success' => true,
     'data' => $groups,
