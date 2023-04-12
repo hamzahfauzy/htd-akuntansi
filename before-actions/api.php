@@ -13,6 +13,7 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'options') {
 $nonAuthRoute = !in_array($route,[
     'api/accounts/lists',
     'api/bills/lists',
+    'api/bills/single-unpayment',
     'api/bills/unpayment',
     'api/subjects/lists',
 ]);
