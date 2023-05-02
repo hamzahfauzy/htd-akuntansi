@@ -9,7 +9,7 @@ $params = [
 
 if(isset($_GET['group_name']))
 {
-    $params['name'] = $_GET['group_name'];
+    $params['name'] = ['LIKE','%'.$_GET['group_name'].'%'];
 }
 
 $groups = $db->all('groups', $params);
