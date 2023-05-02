@@ -3,9 +3,16 @@
 $conn = conn();
 $db   = new Database($conn);
 
-$groups = $db->all('groups',[
+$params = [
     'report_id' => (activeMaster()?activeMaster()->id:0)
-]);
+];
+
+if(isset($_GET['group_name']))
+{
+    $params['name'] = $_GET['group_name'];
+}
+
+$groups = $db->all('groups', $params);
 
 $groups = array_map(function($g) use ($db){
     $db->query = "SELECT bills.subject_id, subjects.code subject_code, subjects.name subject_name, subjects.email subject_email, subjects.address subject_address FROM bills JOIN subjects ON subjects.id=bills.subject_id WHERE bills.status='BELUM LUNAS'";
