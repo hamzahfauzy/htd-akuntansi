@@ -106,10 +106,6 @@
 		})
 		<?php endif ?>
 		$('.datatable').dataTable();
-		$('[name="bills[subject_id]"]').select2({
-			allowClear: true,
-			placeholder: 'Pilih'
-		});
 		$(".select2").select2({
 			allowClear: true,
 			placeholder: 'Pilih'
@@ -210,7 +206,7 @@
 
 		<?php endif ?>
 
-		$(".select-subject").select2({
+		$('.select-subject, [name="bills[subject_id]"]').select2({
 			theme: "bootstrap",
 			width: '100%',
 			minimumInputLength: 2,
