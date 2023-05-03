@@ -14,6 +14,7 @@ if(request() == 'POST')
     $transaction = $db->insert('transactions',[
         'subject_id' => $_POST['subject_id'],
         'report_id'  => $report_id,
+        'user_id'  => auth()->user->id,
         'transaction_code' => $_POST['transaction_code'],
         'total' => $total
     ]);
