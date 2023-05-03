@@ -811,7 +811,7 @@ function get_laba_rugi()
     return $total_pendapatan-$total_beban;
 }
 
-function generateRandomString($length = 10) {
+function generateRandomString($length = 50) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
