@@ -21,7 +21,7 @@
                         <?php endif */ ?>
 
                         <?php if(
-                            (in_array($table,['transactions']) && is_allowed(get_route_path($table.'/payment-panel',[]),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
+                            (in_array($table,['transactions']) && is_allowed(get_route_path($table.'/payment-panel'),auth()->user->id) && activeMaster() && activeMaster()->is_open == 'BUKA')
                             ): ?>
                             <a href="<?=routeTo($table.'/payment-panel')?>" class="btn btn-primary btn-round">Panel Transaksi</a>
                         <?php endif ?>
@@ -36,7 +36,7 @@
                         <?php endif ?>
 
                         <?php if(
-                            ($table == 'cash_flows' && is_allowed(get_route_path('cash_flows/index',[]),auth()->user->id) && !isset($_GET['full']))
+                            ($table == 'cash_flows' && is_allowed(get_route_path('cash_flows/index'),auth()->user->id) && !isset($_GET['full']))
                             ): ?>
                             <a href="<?=routeTo('cash_flows/index')?>" class="btn btn-primary btn-round">Lihat Mutasi Lengkap</a>
                         <?php endif ?>
