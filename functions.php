@@ -13,6 +13,7 @@ if(file_exists($parent_path . 'vendor/autoload.php'))
 require $parent_path . 'libs/JwtAuth.php';
 require $parent_path . 'libs/Form.php';
 require $parent_path . 'libs/ArrayHelper.php';
+require $parent_path . 'libs/ApiSession.php';
 require $parent_path . 'libs/Session.php';
 require $parent_path . 'libs/Database.php';
 require $parent_path . 'libs/Page.php';
@@ -392,12 +393,15 @@ function url(){
     return $scheme.'://'.$server_name.$port.$base_path;
 }
 
-function auth()
+function auth($mode = false)
 {
     // mode jwt
-    if(config('auth') == 'jwt')
+    $mode = !$mode ? config('auth') : $mode;
+    if($mode == 'jwt')
         return JwtAuth::get();
-    if(config('auth') == 'session')
+    if($mode == 'api')
+        return ApiSession::get();
+    if($mode == 'session')
         return Session::get();
 }
 
@@ -805,4 +809,14 @@ function get_laba_rugi()
     $total_beban = get_total_beban();
 
     return $total_pendapatan-$total_beban;
+}
+
+function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[random_int(0, $charactersLength - 1)];
+    }
+    return $randomString;
 }

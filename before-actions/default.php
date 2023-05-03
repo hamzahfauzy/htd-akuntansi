@@ -14,7 +14,14 @@ if(isset($auth->user) && $route == 'auth/login')
 }
 
 // check if route is allowed
-if(isset($auth->user) && isset($auth->user->id) && !is_allowed($route, $auth->user->id) && $route != 'auth/logout')
+$defaultAllowedRoute = [
+    'auth/logout',
+    'default/index',
+    'default/profile',
+    'default/generate-api-key'
+];
+
+if(isset($auth->user) && isset($auth->user->id) && !is_allowed($route, $auth->user->id) && !in_array($route, $defaultAllowedRoute))
 {
     return false;
 }

@@ -18,6 +18,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <h2>Profil Pengguna</h2>
                             <?php if($success_msg): ?>
                             <div class="alert alert-success"><?=$success_msg?></div>
                             <?php endif ?>
@@ -36,6 +37,20 @@
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+
+                            <h2>API</h2>
+                            <?php if($success_msg): ?>
+                            <div class="alert alert-success"><?=$success_msg?></div>
+                            <?php endif ?>
+                            <form action="<?=routeTo('default/generate-api-key')?>" method="post">
+                                <div class="form-group">
+                                    <label for="">API Key</label>
+                                    <input type="text" value="<?=$data->auth_token?>" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Generate API Key</button>
                                 </div>
                             </form>
                         </div>

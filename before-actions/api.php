@@ -10,7 +10,7 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'options') {
 }
 
 // $isApiV1 = startWith($route, 'api/v1/');
-$nonAuthRoute = !in_array($route,[
+$nonAuthRoute = in_array($route,[
     'api/accounts/lists',
     'api/bills/lists',
     'api/bills/single-unpayment',
@@ -20,28 +20,45 @@ $nonAuthRoute = !in_array($route,[
 
 if($nonAuthRoute)
 {
-    // check if token is sent
-    $token = getBearerToken();
-    if(!$token)
-    {
-        http_response_code(403);
-        echo json_encode([
-            'success' => false,
-            'message' => 'Api key is required'
-        ]);
-        die();
-    }
+    return true;
+}
 
-    // check if user exists in token
-    if($token != config('api_token'))
-    {
-        http_response_code(403);
-        echo json_encode([
-            'success' => false,
-            'message' => 'Api key is not valid'
-        ]);
-        die();
-    }
+// check if token is sent
+$token = getBearerToken();
+if(!$token)
+{
+    http_response_code(403);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Api key is required'
+    ]);
+    die();
+}
+
+// check if user exists in token
+$userExists = $db->exists('users',['auth_token' => $token]);
+if(!$userExists)
+{
+    http_response_code(403);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Api key is not valid'
+    ]);
+    die();
+}
+
+ApiSession::set($token);
+
+$auth = auth('api');
+// check if route is allowed
+if(!is_allowed($route, $auth->user->id))
+{
+    http_response_code(403);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Unauthorized'
+    ]);
+    die();
 }
 
 return true;

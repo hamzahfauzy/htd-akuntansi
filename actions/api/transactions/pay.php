@@ -34,7 +34,8 @@ $transaction = $db->insert('transactions',[
     'subject_id' => $subject->id,
     'report_id'  => $bill->report_id,
     'transaction_code' => $transaction_code,
-    'total' => $amount
+    'total' => $amount,
+    'user_id' => auth('api')->user->id
 ]);
 
 $insert = $db->insert('transaction_items',[
