@@ -40,14 +40,14 @@
                                 </div>
                             </form>
 
-                            <h2>API</h2>
+                            <hr>
                             <?php if($success_msg): ?>
                             <div class="alert alert-success"><?=$success_msg?></div>
                             <?php endif ?>
                             <form action="<?=routeTo('default/generate-api-key')?>" method="post">
                                 <div class="form-group">
                                     <label for="">API Key</label>
-                                    <input type="text" value="<?=$data->auth_token?>" readonly>
+                                    <input type="text" class="form-control" value="<?=$data->auth_token?>" readonly>
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary">Generate API Key</button>
