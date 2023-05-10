@@ -273,5 +273,9 @@ return [
             'label' => 'Deskripsi',
             'type'  => 'text',
         ]
+    ],
+    'logs' => [
+        'name',
+        'description'
     ]
 ];

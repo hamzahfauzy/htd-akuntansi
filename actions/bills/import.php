@@ -39,6 +39,7 @@ if(request() == 'POST')
 
     $conn = conn();
     $db   = new Database($conn);
+    $logs = '';
 
     for ($row = 2; $row <= $highestRow; $row++) { 
         $code = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
@@ -52,12 +53,14 @@ if(request() == 'POST')
         if(!$db->exists('subjects',[$clause => $code]))
         {
             $failed++;
+            $logs .= "Subject with $clause $code is not exists\n";
             continue;
         }
         
         if(!$db->exists('merchants',['name' => $merchant]))
         {
             $failed++;
+            $logs .= "Merchant with name $merchant is not exists\n";
             continue;
         }
 
@@ -107,6 +110,11 @@ if(request() == 'POST')
 
         $success++;
     }
+
+    $db->insert('logs',[
+        'name' => 'import bill',
+        'description' => $logs
+    ]);
 
     set_flash_msg(['success'=>$success.' data berhasil di import.<br>'.$failed.' data gagal di import.']);
     header('location:'.routeTo('crud/index',['table'=>$table]));
