@@ -1,5 +1,12 @@
 <?php
 
+
+Validation::run([
+    'subject_id' => [
+        'required','exists:subjects,code,'.$_GET['subject_id']
+    ],
+],$_GET,'json');
+
 $conn = conn();
 $db   = new Database($conn);
 
