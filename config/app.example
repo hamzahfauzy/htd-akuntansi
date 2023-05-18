@@ -16,4 +16,14 @@ return [
         'port'     => NULL,
         'socket'   => NULL
     ],
+    'app_name' => 'SIMPKEU',
+    'app_address' => 'Kisaran',
+    'app_phone' => '082369378823',
+    'app_email' => 'htd.official21@gmail.com',
+    'api_token' => 'appkeuangan',
+    'footer' => [
+        'text' => 'Z-Techno',
+        'link' => '',
+        'copyright' => 'Copyright 2023'
+    ]
 ];

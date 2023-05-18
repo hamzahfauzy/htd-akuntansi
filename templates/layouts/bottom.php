@@ -3,14 +3,14 @@
             <nav class="pull-left">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Z-Techno
+                        <a class="nav-link" href="<?=config('footer')['link']?>">
+                            <?= config('footer')['text'] ?>
                         </a>
                     </li>
                 </ul>
             </nav>
             <div class="copyright ml-auto">
-                Copyright &copy; 2021, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">Z-Techno</a>
+				<?=config('footer')['copyright']?>
             </div>				
         </div>
     </footer>
