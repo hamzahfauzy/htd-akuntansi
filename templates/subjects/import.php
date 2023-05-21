@@ -5,7 +5,7 @@
                 <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                     <div>
                         <h2 class="text-white pb-2 fw-bold">Import Subjek</h2>
-                        <h5 class="text-white op-7 mb-2">Memanajemen data subjects</h5>
+                        <h5 class="text-white op-7 mb-2">Memanajemen data subjek</h5>
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
                         <a href="<?=asset('format/subjek.xls')?>" class="btn btn-info btn-round">Download Format</a>
