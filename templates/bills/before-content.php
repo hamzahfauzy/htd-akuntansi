@@ -23,7 +23,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="">Merchant</label>
+                        <label for="">Merchant</label><br>
                         <select name="merchant" id="" class="form-control select2">
                             <option value="">Pilih</option>
                             <?php foreach($additional_data['merchants'] as $merchant): ?>
@@ -32,7 +32,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="">Status</label>
+                        <label for="">Status</label><br>
                         <select name="status" id="" class="form-control select2">
                             <option value="">Pilih</option>
                             <option>LUNAS</option>
