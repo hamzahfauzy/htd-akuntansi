@@ -1,9 +1,8 @@
 <?php
 
-
 Validation::run([
     'subject_id' => [
-        'required','exists:subjects,code,'.$_GET['subject_id']
+        'required','exists:subjects,id,'.$_GET['subject_id']
     ],
 ],$_GET,'json');
 
