@@ -50,14 +50,14 @@ if(request() == 'POST')
         $description = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
 
         // check if subject exists
-        if(!$db->exists('subjects',[$clause => $code]))
+        if(!$db->exists('subjects',[''.$clause.'' => $code]))
         {
             $failed++;
             $logs .= "Subject with $clause $code is not exists\n";
             continue;
         }
         
-        $subject  = $db->single('subjects',[$clause => $code]);
+        $subject  = $db->single('subjects',[''.$clause.'' => $code]);
 
         if(!$db->exists('bills',['bill_code' => $subject->code.'-'.$bill_code]))
         {
