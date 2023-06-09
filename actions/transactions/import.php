@@ -68,6 +68,11 @@ if(request() == 'POST')
 
         $bill = $db->single('bills',['bill_code' => $subject->code.'-'.$bill_code]);
         $sisa = $bill->remaining_payment - $amount;
+        if($sisa < 0){
+            $failed++;
+            $logs .= "Amount of bill with $subject->code-$bill_code is bigger than remaining payment\n";
+            continue; // something wrong
+        }
         $db->update('bills',[
             'remaining_payment' => $sisa,
             'status' => $sisa == 0 ? 'LUNAS' : 'BELUM LUNAS'
