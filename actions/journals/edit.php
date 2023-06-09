@@ -11,8 +11,8 @@ $fields = config('fields')[$table];
 $db->query = "SELECT $table.*, accounts.code as account FROM $table JOIN accounts ON accounts.id = $table.account_id WHERE $table.id = $_GET[id]";
 $data = $db->exec('single');
 
-$data->debit = $data->transaction_type == 'Debit' ? number_format($data->amount) : '';
-$data->kredit = $data->transaction_type == 'Kredit' ? number_format($data->amount) : '';
+$data->debit = $data->transaction_type == 'Debit' ? $data->amount : 0;
+$data->kredit = $data->transaction_type == 'Kredit' ? $data->amount : 0;
 
 if(request() == 'POST')
 {
