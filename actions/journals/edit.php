@@ -12,7 +12,7 @@ $db->query = "SELECT $table.*, accounts.code as account FROM $table JOIN account
 $data = $db->exec('single');
 
 $data->debit = $data->transaction_type == 'Debit' ? number_format($data->amount) : '';
-$data->kredit = $data->transaction_type == 'Kredit' ? number_format($d->amount) : '';
+$data->kredit = $data->transaction_type == 'Kredit' ? number_format($data->amount) : '';
 
 if(request() == 'POST')
 {
