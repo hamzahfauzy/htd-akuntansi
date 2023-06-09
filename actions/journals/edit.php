@@ -8,9 +8,11 @@ $error_msg = get_flash_msg('error');
 $old = get_flash_msg('old');
 $fields = config('fields')[$table];
 
-$data = $db->single($table,[
-    'id' => $_GET['id']
-]);
+$db->query = "SELECT $table.*, accounts.code as account FROM $table JOIN accounts ON accounts.id = $table.account_id WHERE id = $_GET[id]";
+$data = $db->exec('single');
+
+$data->debit = $data->transaction_type == 'Debit' ? number_format($data->amount) : '';
+$data->kredit = $data->transaction_type == 'Kredit' ? number_format($d->amount) : '';
 
 if(request() == 'POST')
 {
