@@ -16,6 +16,7 @@ Validation::run([
 $conn = conn();
 $db   = new Database($conn);
 $amount = $_POST['amount'];
+$description = $_POST['descr$description'];
 
 $transaction_code = 'TRX-'.strtotime('now');
 $bill = $db->single('bills',['bill_code' => $_POST['bill_code']]);
