@@ -18,7 +18,7 @@ $db   = new Database($conn);
 $amount = $_POST['amount'];
 
 $transaction_code = 'TRX-'.strtotime('now');
-$bill = $db->single('bills',['code' => $_POST['bill_code']]);
+$bill = $db->single('bills',['bill_code' => $_POST['bill_code']]);
 $sisa = $bill->remaining_payment - $amount;
 $db->update('bills',[
     'remaining_payment' => $sisa,
