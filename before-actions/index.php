@@ -1,5 +1,9 @@
 <?php
 
+// check if installation is exists
+$conn  = conn();
+$db    = new Database($conn);
+
 $route = get_route();
 
 if(startWith($route,'app/db-')) return true;
@@ -8,10 +12,6 @@ if(startWith($route,'api'))
 {
     return require 'api.php';
 }
-
-// check if installation is exists
-$conn  = conn();
-$db    = new Database($conn);
 
 $installation = $db->single('application');
 if(!$installation)
