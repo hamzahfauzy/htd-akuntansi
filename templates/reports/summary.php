@@ -62,9 +62,11 @@
                                             <th width="20px">#</th>
                                             <th>Group</th>
                                             <th>Merchant</th>
+                                            <th>Deskripsi</th>
                                             <th>Total Tagihan</th>
                                             <th>Total Pembayaran</th>
                                             <th>Sisa</th>
+                                            <th>Presentase</th>
                                         </tr>
                                     </thead>
                                 </table>

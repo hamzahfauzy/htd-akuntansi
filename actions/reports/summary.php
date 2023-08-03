@@ -76,7 +76,7 @@ if(isset($_GET['draw']))
                 INNER JOIN subjects ON subjects.id=bills.subject_id
                 INNER JOIN merchants ON merchants.id=bills.merchant_id
                 WHERE $where
-                GROUP BY bills.merchant_id, group_name";
+                GROUP BY bills.merchant_id, group_name, bills.description";
 
     $db->query = $query . " ORDER BY $col_order LIMIT $start,$length";
     $data  = $db->exec('all');
@@ -93,9 +93,11 @@ if(isset($_GET['draw']))
             $no,
             $d->group_name,
             $d->merchant_name,
+            $d->description,
             number_format($d->bills_total_amount),
             number_format($d->bills_total_payment),
             number_format($d->bills_total_remaining_payment),
+            number_format(($d->bills_total_payment/$d->bills_total_amount)*100, 2),
         ];
     }
 
