@@ -28,6 +28,14 @@ if($sisa < 0)
         'success' => false,
         'message' => 'payment for '.$_POST['bill_code'].' fail because it is invalid'
     ]);
+
+    try {
+        //code...
+        Whatsapp::setMessage($subject->phone, 'Pembayaran dengan kode billing '.$_POST['bill_code'].' gagal karena transaksi tidak valid. Silahkan hubungi kustomer servis.');
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+
     die();
     
 }
@@ -83,6 +91,13 @@ if($merchant->credit_account_id)
         'transaction_code' => 'transaction-'.$transaction->transaction_code,
         'date' => date('Y-m-d')
     ]);
+}
+
+try {
+    //code...
+    Whatsapp::setMessage($subject->phone, 'Pembayaran dengan kode billing '.$_POST['bill_code'].' telah berhasil');
+} catch (\Throwable $th) {
+    //throw $th;
 }
 
 echo json_encode([
