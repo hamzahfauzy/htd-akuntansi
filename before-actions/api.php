@@ -16,6 +16,8 @@ $nonAuthRoute = in_array($route,[
     'api/bills/single-unpayment',
     'api/bills/unpayment',
     'api/subjects/lists',
+    'api/test/send-wa',
+    'api/test/send-wa-queue',
 ]);
 
 if($nonAuthRoute)
