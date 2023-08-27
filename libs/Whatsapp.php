@@ -11,8 +11,10 @@ class Whatsapp
         $conn = conn();
         $db   = new Database($conn);
 
+        $auth = auth('api') ? auth('api') : auth(); 
+
         $message = $db->insert('messages', [
-            'user_id' => auth()->user->id,
+            'user_id' => $auth->user->id,
             'send_by' => 'Whatsapp',
             'target' => $to,
             'content' => $message
@@ -36,7 +38,7 @@ class Whatsapp
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
+          CURLOPT_TIMEOUT => 20,
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",

@@ -15,12 +15,29 @@ Validation::run([
 
 $conn = conn();
 $db   = new Database($conn);
-$amount = $_POST['amount'];
-$description = $_POST['description'];
 
+$bill     = $db->single('bills',['bill_code' => $_POST['bill_code']]);
+$merchant = $db->single('merchants',['id' => $bill->merchant_id]);
+$subject  = $db->single('subjects',['id' => $bill->subject_id]);
+
+$amount      = $_POST['amount'];
+$description = $_POST['description'];
+$sisa        = $bill->remaining_payment - $amount;
 $transaction_code = 'TRX-'.strtotime('now');
-$bill = $db->single('bills',['bill_code' => $_POST['bill_code']]);
-$sisa = $bill->remaining_payment - $amount;
+
+$payload = [
+    'amount'           => $amount,
+    'description'      => $description,
+    'bill_code'        => $bill->bill_code,
+    'bill_amount'      => number_format($bill->amount),
+    'bill_description' => $bill->description,
+    'transaction_code' => $transaction_code,
+    'merchant_name'    => $merchant->name,
+    'subject_name'     => $subject->name,
+    'subject_phone'    => $subject->phone,
+    'subject_email'    => $subject->email,
+];
+
 if($sisa < 0)
 {
     http_response_code(403);
@@ -29,12 +46,7 @@ if($sisa < 0)
         'message' => 'payment for '.$_POST['bill_code'].' fail because it is invalid'
     ]);
 
-    try {
-        //code...
-        Whatsapp::setMessage($subject->phone, 'Pembayaran dengan kode billing '.$_POST['bill_code'].' gagal karena transaksi tidak valid. Silahkan hubungi kustomer servis.');
-    } catch (\Throwable $th) {
-        //throw $th;
-    }
+    new Notification('fail', $payload);
 
     die();
     
@@ -45,9 +57,6 @@ $db->update('bills',[
 ],[
     'id' => $bill->id
 ]);
-
-$merchant = $db->single('merchants',['id' => $bill->merchant_id]);
-$subject = $db->single('subjects',['id' => $bill->subject_id]);
 
 $transaction = $db->insert('transactions',[
     'subject_id' => $subject->id,
@@ -93,12 +102,7 @@ if($merchant->credit_account_id)
     ]);
 }
 
-try {
-    //code...
-    Whatsapp::setMessage($subject->phone, 'Pembayaran dengan kode billing '.$_POST['bill_code'].' telah berhasil');
-} catch (\Throwable $th) {
-    //throw $th;
-}
+new Notification('success', $payload);
 
 echo json_encode([
     'success' => true,

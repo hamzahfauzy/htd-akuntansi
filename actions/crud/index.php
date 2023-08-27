@@ -55,7 +55,7 @@ if(isset($_GET['draw']))
     }
     else
     {
-        $db->query = "SELECT * FROM $table $where ORDER BY ".$col_order." ".$order[0]['dir']." LIMIT $start,$length";
+        $db->query = "SELECT * FROM `$table` $where ORDER BY ".$col_order." ".$order[0]['dir']." LIMIT $start,$length";
         $data  = $db->exec('all');
 
         $total = $db->exists($table,$where,[

@@ -28,5 +28,6 @@ return [
     ],
     'WA_API_KEY' => '',
     'WA_API_SENDER' => '',
-    'WA_API_SEND_URL' => ''
+    'WA_API_SEND_URL' => '',
+    'REMINDER_DATE' => false,
 ];

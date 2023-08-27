@@ -82,7 +82,7 @@ class Form
                 $conn = conn();
                 $db   = new Database($conn);
                 $clause = count($_clause) ? 'WHERE ' . $db->build_clause($_clause) : '';
-                $db->query = "SELECT $obj_array[1] as id, $last_params as value FROM $options $clause";
+                $db->query = "SELECT $obj_array[1] as id, $last_params as value FROM `$options` $clause";
                 $datas = $db->exec('all');
                 $options = $datas;
                 $lists .= "<option value=''>- Pilih -</option>";
@@ -163,7 +163,7 @@ class Form
                 $conn = conn();
                 $db   = new Database($conn);
                 $clause = count($_clause) ? 'WHERE ' . $db->build_clause($_clause) : '';
-                $db->query = "SELECT $obj_array[1] as id, $last_params as value FROM $options $clause";
+                $db->query = "SELECT $obj_array[1] as id, $last_params as value FROM `$options` $clause";
                 $data = $db->exec('single');
                 return $data->value;
                 // $options = $datas;

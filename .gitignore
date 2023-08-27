@@ -1,4 +1,6 @@
 config/app.php
+config/notifications/*
+!config/notifications/test.php
 public/uploads
 
 #for development purpose

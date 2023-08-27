@@ -42,7 +42,7 @@ if($status)
     $where .= " AND status='$status'";
 }
 
-$query = "SELECT $table.*, CONCAT(subjects.code,' - ',subjects.name) subject_name FROM $table JOIN subjects ON subjects.id = $table.subject_id $where ORDER BY ".$col_order." ".$order[0]['dir'];
+$query = "SELECT `$table`.*, CONCAT(subjects.code,' - ',subjects.name) subject_name FROM `$table` JOIN subjects ON subjects.id = `$table`.subject_id $where ORDER BY ".$col_order." ".$order[0]['dir'];
 $db->query = $query ." LIMIT $start,$length";
 $data  = $db->exec('all');
 

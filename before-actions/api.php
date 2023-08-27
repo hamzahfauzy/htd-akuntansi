@@ -18,6 +18,7 @@ $nonAuthRoute = in_array($route,[
     'api/subjects/lists',
     'api/test/send-wa',
     'api/test/send-wa-queue',
+    'api/test/send-wa-notif',
 ]);
 
 if($nonAuthRoute)

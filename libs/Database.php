@@ -16,7 +16,7 @@ class Database
 
     function get_pk()
     {
-        $query   = "SHOW KEYS FROM $this->table WHERE Key_name = 'PRIMARY'";
+        $query   = "SHOW KEYS FROM `$this->table` WHERE Key_name = 'PRIMARY'";
         $pk      = $this->connection->query($query);
         if($this->type == 'PDO')
             $pk      = $pk->fetchObject();
@@ -28,7 +28,7 @@ class Database
     function insert($table, $val)
     {
         $this->table = $table;
-        $this->query = "INSERT INTO $table";
+        $this->query = "INSERT INTO `$table`";
         $fields = implode(',',array_keys($val));
         $vals = array_values($val);
         $vals = array_map(function($v){
@@ -44,7 +44,7 @@ class Database
         $this->table = $table;
         $values = $this->build_values($val);
         $string = $this->build_clause($clause);
-        $this->query = "UPDATE $table SET $values WHERE $string AND last_insert_id(".$this->get_pk().")";
+        $this->query = "UPDATE `$table` SET $values WHERE $string AND last_insert_id(".$this->get_pk().")";
         return $this->exec('update');
     }
 
@@ -60,7 +60,7 @@ class Database
     {
         $this->table = $table;
         $conn = $this->connection;
-        $this->query = "SELECT * FROM $table";
+        $this->query = "SELECT * FROM `$table`";
         $string = $this->build_clause($clause);
         $string_order = $this->build_order($order);
         if($string)
@@ -78,7 +78,7 @@ class Database
     {
         $this->table = $table;
         $conn = $this->connection;
-        $this->query = "SELECT * FROM $table";
+        $this->query = "SELECT * FROM `$table`";
         $string = $this->build_clause($clause);
         $string_order = $this->build_order($order);
         if($string)
@@ -93,7 +93,7 @@ class Database
     {
         $this->table = $table;
         $conn = $this->connection;
-        $this->query = "DELETE FROM $table";
+        $this->query = "DELETE FROM `$table`";
         if($clause)
         {
             $string = $this->build_clause($clause);
@@ -106,7 +106,7 @@ class Database
     {
         $this->table = $table;
         $conn = $this->connection;
-        $this->query = "SELECT * FROM $table";
+        $this->query = "SELECT * FROM `$table`";
         $string = $this->build_clause($clause);
         $string_order = $this->build_order($order);
         if($string)
@@ -122,7 +122,7 @@ class Database
     {
         $this->table = $table;
         $conn = $this->connection;
-        $this->query = "TRUNCATE TABLE $table";
+        $this->query = "TRUNCATE TABLE `$table`";
 
         return $this->exec();
     }

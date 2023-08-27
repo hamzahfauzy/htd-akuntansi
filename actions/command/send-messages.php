@@ -13,7 +13,7 @@ if(file_exists($parent_path . 'lock.txt'))
 
 file_put_contents($parent_path . 'lock.txt', strtotime('now'));
 
-echo "Counting Start\n";
+echo date('Y-m-d H:i:s') . " - Send Message Start\n";
 
 $conn = conn();
 $db   = new Database($conn);
@@ -21,20 +21,29 @@ $db   = new Database($conn);
 $messages = $db->all('messages',[
     'status' => 'PENDING'
 ]);
+
 foreach($messages as $message)
 {
-    echo "send message to $message->target Started\n";
-    if($message->send_by == 'Whatsapp')
-    {
-        Whatsapp::send($message->target, $message->content);
+    $execute_at = date('Y-m-d H:i:s');
+    echo $execute_at . " - send message to $message->target Started\n";
+    try {
+        //code...
+        (new $message->send_by)->send($message->target, $message->content);
+    } catch (\Throwable $th) {
+        //throw $th;
+        print_r($th);
     }
-    $db->update('messages',['status' => 'DONE'],[
+
+    $db->update('messages',[
+        'status' => 'DONE',
+        'execute_at' => $execute_at,
+    ],[
         'id' => $message->id
     ]);
-    echo "send message to $message->target Finished\n";
+    echo $execute_at . " - send message to $message->target Finished\n";
 }
 
-echo "Counting Finish\n";
+echo date('Y-m-d H:i:s') . " - Send Message Finish\n";
 
 unlink($parent_path . 'lock.txt');
 
