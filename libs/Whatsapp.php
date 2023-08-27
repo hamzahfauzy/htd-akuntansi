@@ -11,7 +11,7 @@ class Whatsapp
         $conn = conn();
         $db   = new Database($conn);
 
-        $auth = auth('api') ? auth('api') : auth(); 
+        $auth = auth('api')->user ? auth('api') : auth(); 
 
         $message = $db->insert('messages', [
             'user_id' => $auth->user->id,
