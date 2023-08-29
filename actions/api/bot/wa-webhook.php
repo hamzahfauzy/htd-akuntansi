@@ -1,8 +1,17 @@
 <?php
 
+$message_lists = [
+    'cek bill'
+];
+
 header('content-type: application/json');
 $data    = json_decode(file_get_contents('php://input'), true);
 $message = $data['message'];
+
+
+if(!in_array($message, $message_lists)) die();
+
+
 $from    = $data['from'];
 $from2   = explode('@',$from)[0];
 
