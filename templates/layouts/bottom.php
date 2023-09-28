@@ -93,6 +93,18 @@
 				}
 			}
 		})
+		<?php elseif(get_route() == 'crud/index' && $_GET['table'] == 'transactions'): ?>
+		$('.datatable-crud').dataTable({
+			order: [[4, 'desc']],
+			stateSave:true,
+			pagingType: 'full_numbers_no_ellipses',
+			processing: true,
+			search: {
+				return: true
+			},
+			serverSide: true,
+			ajax: location.href
+		})
 		<?php else: ?>
 		$('.datatable-crud').dataTable({
 			stateSave:true,
