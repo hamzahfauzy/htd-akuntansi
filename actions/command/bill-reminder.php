@@ -87,6 +87,7 @@ try {
                     }
         
                     (new $reminderConfig['provider'])->send($target, $message);
+                    sleep(10);
                 } catch (\Throwable $th) {
                     //throw $th;
                     print_r($th);
