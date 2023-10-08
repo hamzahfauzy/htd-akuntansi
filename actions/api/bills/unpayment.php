@@ -29,7 +29,7 @@ $groups = array_map(function($g) use ($db){
     $subjects = $db->exec('all');
 
     $subjects = array_map(function($s) use ($db){
-        $db->query = "SELECT bills.remaining_payment bill_amount, bills.bill_code, merchants.name merchant_name FROM bills JOIN merchants ON merchants.id=bills.merchant_id WHERE bills.subject_id=$s->subject_id AND bills.status='BELUM LUNAS'";
+        $db->query = "SELECT bills.remaining_payment bill_amount, bills.bill_code, merchants.name merchant_name FROM bills JOIN merchants ON merchants.id=bills.merchant_id WHERE bills.subject_id=$s->subject_id AND bills.status='BELUM LUNAS' ORDER BY merchants.id ASC";
         $s->bills  = $db->exec('all');
     
         return $s;
