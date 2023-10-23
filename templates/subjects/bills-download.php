@@ -61,6 +61,8 @@
             
             <?php endif ?>
         </table>
+
+        <p><i><b>NB : </b> Bila ada yang tidak sesuai bisa menghubungi 085791305947 <b>(usth Farida)</b></i></p>
     </div>
 </body>
 </html>
