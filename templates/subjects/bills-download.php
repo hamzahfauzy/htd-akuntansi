@@ -41,7 +41,12 @@
                 <th width="200">Deskripsi</th>
                 <th width="100">Nominal</th>
             </tr>
-            <?php foreach($subject->bills as $bill): ?>
+            <?php if(empty($subject->bills)): ?>
+            <tr>
+                <td colspan="4"><i>Tidak ada tagihan</i></td>
+            </tr>
+            <?php else: ?>
+            <?php $total = 0; foreach($subject->bills as $bill): $total+=$bill->amount;?>
             <tr>
                 <td><?=$bill->bill_code?></td>
                 <td><?=$bill->merchant_name?></td>
@@ -49,10 +54,11 @@
                 <td>Rp. <?=number_format($bill->amount)?></td>
             </tr>
             <?php endforeach ?>
-            <?php if(empty($subject->bills)): ?>
             <tr>
-                <td colspan="4"><i>Tidak ada tagihan</i></td>
+                <td colspan="3">TOTAL</td>
+                <td>Rp. <?=number_format($total)?></td>
             </tr>
+            
             <?php endif ?>
         </table>
     </div>
