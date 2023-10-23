@@ -6,6 +6,7 @@ class Database
     public $query = '';
     public $table = '';
     public $type = '';
+    private $connection = null;
     private $without_quote = ['NULL','TIMESTAMP'];
     function __construct($connection)
     {
