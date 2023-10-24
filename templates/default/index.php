@@ -16,7 +16,7 @@
         </div>
         <div class="page-inner mt--5">
             <div class="row mt--2">
-                <div class="col-md-6">
+                <div class="col-12">
                     <div class="card full-height">
                         <div class="card-body">
                             <div class="card-title">Overall statistics</div>
@@ -40,31 +40,6 @@
                         </div>
                     </div>
                 </div>
-                <?php if(activeMaster()): ?>
-                <div class="col-md-6">
-                    <div class="card full-height">
-                        <div class="card-body">
-                            <div class="card-title">Total Pendapatan & Beban</div>
-                            <div class="row py-3">
-                                <div class="col-md-6 d-flex flex-column justify-content-around">
-                                    <div>
-                                        <h6 class="fw-bold text-uppercase text-success op-8">Total Pendapatan</h6>
-                                        <h3 class="fw-bold">Rp. <?=number_format($total_pendapatan)?></h3>
-                                    </div>
-                                    <div>
-                                        <h6 class="fw-bold text-uppercase text-danger op-8">Total Beban</h6>
-                                        <h3 class="fw-bold">Rp. <?=number_format($total_beban)?></h3>
-                                    </div>
-                                    <div>
-                                        <h6 class="fw-bold text-uppercase text-success op-8">Laba Rugi</h6>
-                                        <h3 class="fw-bold">Rp. <?=number_format($laba_rugi)?></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php endif ?>
             </div>
         </div>
     </div>
