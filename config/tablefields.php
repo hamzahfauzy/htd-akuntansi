@@ -116,7 +116,7 @@ return [
         ],
         'email' => [
             'label' => 'Email',
-            'type'  => 'email'
+            'type'  => 'text'
         ],
     ],
     'modules' => [
