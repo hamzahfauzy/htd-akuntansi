@@ -6,7 +6,7 @@ $db    = new Database($conn);
 
 $route = get_route();
 
-if(startWith($route,'app/db-')) return true;
+if(startWith($route,'app/db-') || $route == 'subjects/bills-download') return true;
 
 if(startWith($route,'api'))
 {
