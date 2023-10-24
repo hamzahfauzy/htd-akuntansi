@@ -22,7 +22,7 @@ Informasi besaran ini bisa didapatkan dengan cara klik link berikut:
 
 [link]
 
-(SAVE PHONEBOOK nomer WA ini agar link bisa diklik).
+(_SAVE PHONEBOOK nomer WA ini agar link bisa diklik_).
 
 Mohon penyelesaian administrasi siswa tersebut bisa dilakukan paling lambat tanggal 10 November 2023 melalui bendahara sekolah. 
 
@@ -42,8 +42,8 @@ $message = str_replace('[link]', $link, $message);
 
 try {
     //code...
-    $phone = '6282369378823'; // 
-    // $phone = $subject->phone;
+    // $phone = '6282369378823'; // 
+    $phone = $subject->phone;
     $wa = Whatsapp::send($phone, $message);
     set_flash_msg(['success'=>'Notifikasi berhasil dikirim']);
 } catch (\Throwable $th) {
