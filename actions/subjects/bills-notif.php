@@ -22,7 +22,7 @@ Informasi besaran ini bisa didapatkan dengan cara klik link berikut:
 
 [link]
 
-(_SAVE PHONEBOOK nomer WA ini agar link bisa diklik_).
+*_SAVE nomer WA ini agar link bisa diklik_
 
 Mohon penyelesaian administrasi siswa tersebut bisa dilakukan paling lambat tanggal 10 November 2023 melalui bendahara sekolah. 
 
@@ -35,7 +35,7 @@ Mohamad Roji'i, M.Pd.
 
 
 ---
-NB: Apabila ada data yang tidak sesuai, mohon berkenan menghubungi bendahara sekolah, Ustadzah Farida di 085791305947";
+NB: Apabila ada kendala atau data yang tidak sesuai, mohon berkenan menghubungi bendahara sekolah, Ustadzah Farida di 085791305947.";
 
 $message = str_replace('[namasiswa]', $subject->name, $message);
 $message = str_replace('[link]', $link, $message);

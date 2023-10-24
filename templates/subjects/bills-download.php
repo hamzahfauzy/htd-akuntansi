@@ -16,16 +16,18 @@
 <body>
     <!-- HEAD -->
     <div style="text-align:center;padding-bottom:10px;border-bottom:2px solid #000;">
-        <h2 style="margin:0;padding:0">INSTITUSI KHAZANAH ILMU</h2>
+        <img src="<?=$base64?>" alt="" width="120" height="120" style="position:absolute;left:10;float:left;margin-right:-120;top:10;margin-top:10;">
+        <h2 style="margin:0;padding:0;margin-top:10">YAYASAN KHAZANAH ILMU</h2>
         <h3 style="margin:0;padding:0">
-            SEKOLAH DASAR KHAZANAH ILMU<br>
-            NSS: 104050214056    NPSN: 20576103<br>
+            PG - TK - SD - MADIN
         </h3>
         <p style="margin:0;padding:0">
             <i>
-                Jl. Ubi II, No. 23 Wage, Taman, Sidoarjo 031-8553790 / 081615065375<br>
-                Website:www.institusi-khazanahilmu.blogspot.com<br>
-                Email: institusi.khazanahilmu@gmail.com
+                SK Mentri Hukum dan HAM Nomor AHU-6433.AH.01.04.2011<br>
+                Jl. Ubi II, No. 23 Wage, Taman, Sidoarjo<br>
+                Phone : (031) 8553790, Hotline : 08113218110<br>
+                Website: www.khazanahilmu.sch.id<br>
+                Email: office@khazanahilmu.sch.id
             </i>
         </p>
     </div>

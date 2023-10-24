@@ -36,7 +36,7 @@
                     <?php endif ?>
                     <div class="card-body">
                         <center>
-                            <img src="<?= routeTo(app('logo') ? app('logo') : 'assets/img/main-logo.png')?>" width="150px" height="100px" alt="logo" style="object-fit:contain;">
+                            <img src="<?= routeTo('assets/img/main-logo.png')?>" width="150px" height="100px" alt="logo" style="object-fit:contain;">
                         </center>
                         <div class="card-title text-center">Login Form</div>
                         <div class="card-category text-center">Masukkan Username dan Password anda pada bidang di bawah ini.</div>
