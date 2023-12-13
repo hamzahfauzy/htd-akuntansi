@@ -9,7 +9,7 @@ if(!isset($auth->user) && !in_array($route, ['auth/login','installation']))
 
 if(isset($auth->user) && $route == 'auth/login')
 {
-    header("location:".routeTo(app('after_login_page')));
+    header("location:".routeTo(config('after_login_page')));
     die();
 }
 
@@ -23,6 +23,8 @@ $defaultAllowedRoute = [
 
 if(isset($auth->user) && isset($auth->user->id) && !is_allowed($route, $auth->user->id) && !in_array($route, $defaultAllowedRoute))
 {
+    header("location:".routeTo(config('after_login_page')));
+    die();
     return false;
 }
 

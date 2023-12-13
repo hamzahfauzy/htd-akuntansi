@@ -61,18 +61,18 @@ if(isset($_GET['draw']))
     ];
 
     $col_order = $order[0]['column']-1;
-    $col_order = $col_order < 0 ? 'bills.id' : $columns[$col_order];
+    $col_order = $col_order < 0 ? 'bills.merchant_id' : $columns[$col_order];
     $col_order = $col_order ." ".$order[0]['dir'];
     
     $query = "SELECT 
-                    bills.*, 
+                    bills.merchant_id,
                     SUM(bills.amount) bills_total_amount,
                     SUM(bills.amount-bills.remaining_payment) bills_total_payment,
                     SUM(bills.remaining_payment) bills_total_remaining_payment,
                     subjects.code subject_code,
                     subjects.name subject_name,
                     merchants.name merchant_name,
-                    (SELECT name FROM groups WHERE id=(SELECT group_id FROM subject_groups WHERE user_id=subjects.user_id)) group_name
+                    (SELECT name FROM `groups` WHERE id=(SELECT group_id FROM subject_groups WHERE user_id=subjects.user_id)) group_name
                 FROM 
                     bills
                 INNER JOIN subjects ON subjects.id=bills.subject_id

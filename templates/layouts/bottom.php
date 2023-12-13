@@ -66,7 +66,7 @@
 	<?php endif ?>
 	<script src="<?=asset('assets/js/plugin/datatables-pagingtype/full_numbers_no_ellipses.js')?>"></script>
 	<script>
-		<?php if((get_route() == 'crud/index' && $_GET['table'] == 'bills') || get_route() == 'reports/recaps' || get_route() == 'reports/summary'): ?>
+		<?php if((get_route() == 'crud/index' && $_GET['table'] == 'bills') || get_route() == 'reports/recaps' || get_route() == 'reports/summary' || get_route() == 'reports/total'): ?>
 		window.billData = $('.datatable-crud').DataTable({
 			stateSave:true,
 			pagingType: 'full_numbers_no_ellipses',

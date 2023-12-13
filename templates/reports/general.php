@@ -39,7 +39,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
                                             <label for="">Saldo Awal</label>
-                                            <input type="text" class="form-control" readonly value="<?=isset($account)?number_format($account->balance_amount,0,',','.'):''?>">
+                                            <input type="text" class="form-control" readonly value="<?=isset($account)?number_format($account->balance_amount??0,0,',','.'):''?>">
                                         </div>
                                     </div>
                                 </div>
@@ -70,14 +70,14 @@
                                             <td style="white-space:nowrap"><?=$idx+1?></td>
                                             <td style="white-space:nowrap"><?=date('d/m/Y', strtotime($trx->date))?></td>
                                             <td style="white-space:nowrap"><?=$trx->description?></td>
-                                            <td style="white-space:nowrap;text-align:right"><?=$trx->transaction_type=='Debit'?number_format($trx->amount,0,',','.'):''?></td>
-                                            <td style="white-space:nowrap;text-align:right"><?=$trx->transaction_type=='Kredit'?number_format($trx->amount,0,',','.'):''?></td>
-                                            <td style="white-space:nowrap;text-align:right"><?=number_format($balance,0,',','.')?></td>
+                                            <td style="white-space:nowrap;text-align:right"><?=$trx->transaction_type=='Debit'?number_format($trx->amount??0,0,',','.'):''?></td>
+                                            <td style="white-space:nowrap;text-align:right"><?=$trx->transaction_type=='Kredit'?number_format($trx->amount??0,0,',','.'):''?></td>
+                                            <td style="white-space:nowrap;text-align:right"><?=number_format($balance??0,0,',','.')?></td>
                                         </tr>
                                         <?php endforeach ?>
                                         <tr>
                                             <td colspan="6">
-                                                <center>Balance : <b><?=number_format($balance, 0,',','.')?></b></center>
+                                                <center>Balance : <b><?=number_format($balance??0, 0,',','.')?></b></center>
                                             </td>
                                         </tr>
                                     </tbody>

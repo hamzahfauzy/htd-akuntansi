@@ -23,10 +23,10 @@ if($accounts)
     // ]);
 
     // $db->query = "SELECT SUM(amount) as TOTAL FROM journals WHERE account_id IN $account_ids AND transaction_type = 'Debit'";
-    // $debt = $db->exec('single')->TOTAL;
+    // $debt = $db->exec('single')->TOTAL ?? 0;
     
     // $db->query = "SELECT SUM(amount) as TOTAL FROM journals WHERE account_id IN $account_ids AND transaction_type = 'Kredit'";
-    // $credit = $db->exec('single')->TOTAL;
+    // $credit = $db->exec('single')->TOTAL ?? 0;
 
     // return compact('dump_accounts','journals','debt','credit');
 
@@ -44,10 +44,10 @@ if($accounts)
 
     $pendapatan = array_map(function($d) use ($db) {
         $db->query = "SELECT SUM(amount) as TOTAL FROM journals WHERE account_id = $d->id AND transaction_type = 'Debit'";
-        $d->debt = $db->exec('single')->TOTAL;
+        $d->debt = $db->exec('single')->TOTAL ?? 0;
         
         $db->query = "SELECT SUM(amount) as TOTAL FROM journals WHERE account_id = $d->id AND transaction_type = 'Kredit'";
-        $d->credit = $db->exec('single')->TOTAL;
+        $d->credit = $db->exec('single')->TOTAL ?? 0;
 
         return $d;
     }, $pendapatan);
@@ -59,10 +59,10 @@ if($accounts)
 
     $beban = array_map(function($d) use ($db) {
         $db->query = "SELECT SUM(amount) as TOTAL FROM journals WHERE account_id = $d->id AND transaction_type = 'Debit'";
-        $d->debt = $db->exec('single')->TOTAL;
+        $d->debt = $db->exec('single')->TOTAL ?? 0;
         
         $db->query = "SELECT SUM(amount) as TOTAL FROM journals WHERE account_id = $d->id AND transaction_type = 'Kredit'";
-        $d->credit = $db->exec('single')->TOTAL;
+        $d->credit = $db->exec('single')->TOTAL ?? 0;
 
         return $d;
     }, $beban);

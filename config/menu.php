@@ -25,6 +25,7 @@ return [
         'laporan' => [
             'rangkuman' => 'reports/summary',
             'rekapitulasi' => 'reports/recaps',
+            'total' => 'reports/total',
         ]
     ],
     'kontak' => 'crud/index?table=contacts',
