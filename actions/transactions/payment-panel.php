@@ -10,13 +10,16 @@ if(request() == 'POST')
     $report_id = activeMaster()?activeMaster()->id:0;
     $total = array_sum($_POST['amount']);
 
+    $status = config('OPERATOR_ROLE_ID') == get_role(auth()->user->id)->role_id ? 'PENDING' : 'CONFIRM';
+
     // insert to transaction
     $transaction = $db->insert('transactions',[
         'subject_id' => $_POST['subject_id'],
         'report_id'  => $report_id,
         'user_id'  => auth()->user->id,
         'transaction_code' => $_POST['transaction_code'],
-        'total' => $total
+        'total' => $total,
+        'status' => $status
     ]);
 
     foreach($_POST['bill_id'] as $key => $bill_id)

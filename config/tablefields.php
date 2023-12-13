@@ -259,6 +259,10 @@ return [
             'label' => 'Total',
             'type'  => 'number'
         ],
+        'status' => [
+            'label' => 'Status',
+            'type'  => 'options:PENDING|CONFIRM'
+        ],
         'created_at' => [
             'label' => 'Tanggal',
             'type'  => 'datetime-local'
