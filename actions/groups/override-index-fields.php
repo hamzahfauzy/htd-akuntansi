@@ -11,6 +11,6 @@ return [
     ],
     'jumlah_siswa' => [
         'label' => 'Jumlah Siswa',
-        'type'  => 'number'
+        'type'  => 'text'
     ],
 ];
