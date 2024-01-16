@@ -8,7 +8,7 @@ $report_id = activeMaster() ? activeMaster()->id : 0;
 
 $groups = $db->all('groups',[
     'report_id' => $report_id,
-    'parent_id' => ['IS', 'NOT NULL']
+    'parent_id' => ['<>', 'NULL']
 ]);
 
 $parentGroups = $db->all('groups',[
