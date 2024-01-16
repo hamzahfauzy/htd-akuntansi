@@ -34,7 +34,7 @@
                                     <select name="group" id="group" class="form-control">
                                         <option value="">Semua</option>
                                         <?php foreach($groups as $group): ?>
-                                            <option value="<?=$group->id?>" class="parent-<?=$group->parent_id?>" <?=isset($_GET['group']) && $_GET['group'] == $group->id ? 'selected=""' : ''?>><?=$group->name?></option>
+                                            <option value="<?=$group->id?>" class="parent-<?=$group->parent_id?>" <?=isset($_GET['group']) && $_GET['group'] == $group->id ? 'selected=""' : ''?> <?=isset($_GET['parent_group']) && !empty($_GET['parent_group']) && $_GET['parent_group'] != $group->parent_id ? 'style="display:none"' : ''?>><?=$group->name?></option>
                                         <?php endforeach ?>
                                     </select>
                                 </div>
