@@ -22,7 +22,7 @@ if(isset($_GET['parent_group']) || isset($_GET['group']) || (isset($_GET['start_
     $_where = [];
     $_additional = [];
     // $where = "WHERE ";
-    if(isset($_GET['parent_group']) && empty($_GET['group']))
+    if(isset($_GET['parent_group']) && !empty($_GET['parent_group']) && empty($_GET['group']))
     {
         $_additional[] = "(SELECT id FROM `groups` WHERE id=(SELECT group_id FROM subject_groups WHERE user_id=subjects.user_id)) group_id";
         $_where[] = " (SELECT parent_id FROM `groups` WHERE id=(SELECT group_id FROM subject_groups WHERE user_id=subjects.user_id)) = $_GET[parent_group]";
