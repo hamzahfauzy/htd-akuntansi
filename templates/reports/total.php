@@ -75,8 +75,15 @@
     <script>
     function showChild(parentId)
     {
-        document.querySelector('#group').querySelectorAll('option').forEach(opt => { opt.style.display = 'none' })
-        document.querySelector('#group').querySelectorAll('.parent-'+parentId).forEach(opt => { opt.style.display = 'block' })
+        if(parentId)
+        {
+            document.querySelector('#group').querySelectorAll('option').forEach(opt => { opt.style.display = 'none' })
+            document.querySelector('#group').querySelectorAll('.parent-'+parentId).forEach(opt => { opt.style.display = 'block' })
+        }
+        else
+        {
+            document.querySelector('#group').querySelectorAll('option').forEach(opt => { opt.style.display = 'block' })
+        }
     }
     </script>
 <?php load_templates('layouts/bottom') ?>
