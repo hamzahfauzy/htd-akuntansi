@@ -7,17 +7,30 @@ $success_msg = get_flash_msg('success');
 $report_id = activeMaster() ? activeMaster()->id : 0;
 
 $groups = $db->all('groups',[
-    'report_id' => $report_id
+    'report_id' => $report_id,
+    'parent_id' => ['IS', 'NOT NULL']
+]);
+
+$parentGroups = $db->all('groups',[
+    'report_id' => $report_id,
+    'parent_id' => ['IS', 'NULL']
 ]);
 
 $where      = "";
 $additional = "";
 $group      = "bills.merchant_id";
-if(isset($_GET['group']) || (isset($_GET['start_at']) && isset($_GET['end_at'])))
+if(isset($_GET['parent_group']) || isset($_GET['group']) || (isset($_GET['start_at']) && isset($_GET['end_at'])))
 {
     $_where = [];
     $_additional = [];
     // $where = "WHERE ";
+    if(isset($_GET['parent_group']) && empty($_GET['group']))
+    {
+        $_additional[] = "(SELECT id FROM `groups` WHERE id=(SELECT group_id FROM subject_groups WHERE user_id=subjects.user_id)) group_id";
+        $_where[] = " (SELECT parent_id FROM `groups` WHERE id=(SELECT group_id FROM subject_groups WHERE user_id=subjects.user_id)) = $_GET[parent_group]";
+        $group   .= ", group_id";
+    }
+
     if(isset($_GET['group']) && !empty($_GET['group']))
     {
         $_additional[] = "(SELECT id FROM `groups` WHERE id=(SELECT group_id FROM subject_groups WHERE user_id=subjects.user_id)) group_id";
@@ -50,4 +63,4 @@ $query = "SELECT
 $db->query = $query;
 $data = $db->exec('all');
 
-return compact('data','groups','success_msg');
+return compact('data','groups','parentGroups','success_msg');

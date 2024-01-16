@@ -21,11 +21,20 @@
                         <div class="card-body">
                             <form action="" class="d-flex">
                                 <div class="form-group flex-fill">
-                                    <label for="">Group</label><br>
-                                    <select name="group" id="" class="form-control select2">
-                                        <option value="">Pilih</option>
+                                    <label for="">Tingkat Kelas</label><br>
+                                    <select name="parent_group" id="parent_group" class="form-control select2" onchange="showChild(this.value)">
+                                        <option value="">Semua</option>
+                                        <?php foreach($parentGroups as $group): ?>
+                                            <option value="<?=$group->id?>" <?=isset($_GET['parentGroup']) && $_GET['parentGroup'] == $group->id ? 'selected=""' : ''?>><?=$group->name?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
+                                <div class="form-group flex-fill">
+                                    <label for="">Kelas</label><br>
+                                    <select name="group" id="group" class="form-control select2">
+                                        <option value="">Semua</option>
                                         <?php foreach($groups as $group): ?>
-                                            <option value="<?=$group->id?>" <?=isset($_GET['group']) && $_GET['group'] == $group->id ? 'selected=""' : ''?>><?=$group->name?></option>
+                                            <option value="<?=$group->id?>" class="parent-<?=$group->parent_id?>" <?=isset($_GET['group']) && $_GET['group'] == $group->id ? 'selected=""' : ''?>><?=$group->name?></option>
                                         <?php endforeach ?>
                                     </select>
                                 </div>
@@ -63,4 +72,11 @@
             </div>
         </div>
     </div>
+    <script>
+    function showChild(parentId)
+    {
+        document.querySelector('#group').querySelectorAll('option').forEach(opt => { opt.style.display = 'none' })
+        document.querySelector('#group').querySelectorAll('.parent-'+parentId).forEach(opt => { opt.style.display = 'block' })
+    }
+    </script>
 <?php load_templates('layouts/bottom') ?>
