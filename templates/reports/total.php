@@ -25,7 +25,7 @@
                                     <select name="parent_group" id="parent_group" class="form-control" onchange="showChild(this.value)">
                                         <option value="">Semua</option>
                                         <?php foreach($parentGroups as $group): ?>
-                                            <option value="<?=$group->id?>" <?=isset($_GET['parentGroup']) && $_GET['parentGroup'] == $group->id ? 'selected=""' : ''?>><?=$group->name?></option>
+                                            <option value="<?=$group->id?>" <?=isset($_GET['parent_group']) && $_GET['parent_group'] == $group->id ? 'selected=""' : ''?>><?=$group->name?></option>
                                         <?php endforeach ?>
                                     </select>
                                 </div>
