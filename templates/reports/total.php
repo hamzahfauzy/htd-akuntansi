@@ -22,7 +22,7 @@
                             <form action="" class="d-flex">
                                 <div class="form-group flex-fill">
                                     <label for="">Tingkat Kelas</label><br>
-                                    <select name="parent_group" id="parent_group" class="form-control select2" onchange="showChild(this.value)">
+                                    <select name="parent_group" id="parent_group" class="form-control" onchange="showChild(this.value)">
                                         <option value="">Semua</option>
                                         <?php foreach($parentGroups as $group): ?>
                                             <option value="<?=$group->id?>" <?=isset($_GET['parentGroup']) && $_GET['parentGroup'] == $group->id ? 'selected=""' : ''?>><?=$group->name?></option>
@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="form-group flex-fill">
                                     <label for="">Kelas</label><br>
-                                    <select name="group" id="group" class="form-control select2">
+                                    <select name="group" id="group" class="form-control">
                                         <option value="">Semua</option>
                                         <?php foreach($groups as $group): ?>
                                             <option value="<?=$group->id?>" class="parent-<?=$group->parent_id?>" <?=isset($_GET['group']) && $_GET['group'] == $group->id ? 'selected=""' : ''?>><?=$group->name?></option>
