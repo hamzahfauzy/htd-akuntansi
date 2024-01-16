@@ -6,10 +6,8 @@ $success_msg = get_flash_msg('success');
 
 $report_id = activeMaster() ? activeMaster()->id : 0;
 
-$groups = $db->all('groups',[
-    'report_id' => $report_id,
-    'parent_id' => ['<>', 'NULL']
-]);
+$db->query = "SELECT * FROM `groups` WHERE parent_id IS NOT NULL AND report_id = $report_id";
+$groups = $db->exec('all');
 
 $parentGroups = $db->all('groups',[
     'report_id' => $report_id,
