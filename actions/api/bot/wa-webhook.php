@@ -6,7 +6,12 @@ header('content-type: application/json');
 //     'cek bill'
 // ];
 
-$data    = json_decode(file_get_contents('php://input'), true);
+// logging 
+$jsonString = file_get_contents('php://input');
+
+file_put_contents("logs.txt", $jsonString, FILE_APPEND);
+
+$data    = json_decode($jsonString, true);
 $message = $data['message'];
 
 $from    = $data['from'];
