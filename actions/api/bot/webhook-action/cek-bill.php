@@ -1,5 +1,12 @@
 <?php
 
+if(!$data)
+{
+    $msg = "No WA anda ".$froms[1]." tidak terdaftar di sistem. Hubungi petugas untuk penyesuaian data siswa dengan no WA terkait";
+    Whatsapp::send($froms[0], $msg);
+    die();
+}
+
 $msg = "Status pembayaran atas nama
 Nama: $data->name
 NIS: $data->code

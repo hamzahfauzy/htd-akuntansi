@@ -22,11 +22,6 @@ $froms   = [$from2, '0'.substr($from2, 2)];
 $conn = conn();
 $db   = new Database($conn);
 
-// if(!in_array($message, $message_lists))
-// {
-//     die();
-// }
-
 $report_id = activeMaster()?activeMaster()->id:0;
 
 $where = "WHERE phone IN ('".implode("','", $froms)."')";
@@ -35,15 +30,7 @@ $db->query = "SELECT *, CONCAT(subjects.code,' - ',subjects.name) as subject_nam
 $data  = $db->exec('single');
 
 try {
-    //code...
-    if(!$data)
-    {
-        $msg = "No WA anda ".$froms[1]." tidak terdaftar di sistem. Hubungi petugas untuk penyesuaian data siswa dengan no WA terkait";
-        Whatsapp::send($froms[0], $msg);
-        die();
-    }
 
-    // random message
     // check sender session
     $sessionId = $from.'-'.date('Y-m-d');
     if(!file_exists("bot/$sessionId"))
@@ -51,8 +38,13 @@ try {
         // set session by sender number and date
         mkdir("bot/$sessionId");
         // send wellcome message
-        $parent = explode('QQ', $data->address);
-        $parent_name = $parent[0];
+        $parent_name = "";
+        if($data)
+        {
+            $parent = explode('QQ', $data->address);
+            $parent_name = $parent[0];
+        }
+        
         $msg = "Assalamualaikum Wr Wb.
 Terima kasih telah mengunjungi Sekolah Khazanah Ilmu, kami harap Bapak/Ibu $parent_name dalam keadaan sehat selalu.
         
