@@ -46,10 +46,10 @@ try {
     // random message
     // check sender session
     $sessionId = $from.'-'.date('Y-m-d');
-    if(!file_exists("public/bot/$sessionId"))
+    if(!file_exists("bot/$sessionId"))
     {
         // set session by sender number and date
-        mkdir("public/bot/$sessionId");
+        mkdir("bot/$sessionId");
         // send wellcome message
         $parent = explode('QQ', $data->address);
         $parent_name = $parent[0];
