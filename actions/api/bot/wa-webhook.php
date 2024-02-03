@@ -71,6 +71,13 @@ Agar semakin banyak yang mendapatkan manfaat atas keberadaan sekolah Khazanah Il
     
     if(in_array($message, [1,2,3,4,5,6]))
     {
+        if(in_array($message, [1,5]) && !$data)
+        {
+            $msg = "No WA anda ".$froms[1]." tidak terdaftar di sistem. Hubungi petugas untuk penyesuaian data siswa dengan no WA terkait";
+            Whatsapp::send($froms[0], $msg);
+            die();
+        }
+        
         if($message == 1)
         {
             require 'webhook-action/cek-bill.php';
