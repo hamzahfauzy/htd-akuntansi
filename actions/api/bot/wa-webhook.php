@@ -1,16 +1,13 @@
 <?php
 
-$message_lists = [
-    'cek bill'
-];
-
 header('content-type: application/json');
+
+// $message_lists = [
+//     'cek bill'
+// ];
+
 $data    = json_decode(file_get_contents('php://input'), true);
 $message = $data['message'];
-
-
-if(!in_array($message, $message_lists)) die();
-
 
 $from    = $data['from'];
 $from2   = explode('@',$from)[0];
@@ -19,6 +16,11 @@ $froms   = [$from2, '0'.substr($from2, 2)];
 
 $conn = conn();
 $db   = new Database($conn);
+
+// if(!in_array($message, $message_lists))
+// {
+//     die();
+// }
 
 $report_id = activeMaster()?activeMaster()->id:0;
 
@@ -36,9 +38,49 @@ try {
         die();
     }
 
+    // random message
+    // check sender session
+    $sessionId = $from.'-'.date('Y-m-d');
+    if(!file_exists("public/bot/$sessionId"))
+    {
+        // set session by sender number and date
+        mkdir("public/bot/$sessionId");
+        // send wellcome message
+        $parent = explode('QQ', $data->address);
+        $parent_name = $parent[0];
+        $msg = "Assalamualaikum Wr Wb.
+        Terima kasih telah mengunjungi Sekolah Khazanah Ilmu, kami harap Bapak/Ibu $parent_name dalam keadaan sehat selalu.
+        
+        Silakan pilih informasi yang dibutuhkan: (ketik angkanya saja). Beberapa pilihan hanya bisa diakses siswa aktif.
+        
+        1. Cek Status Pembayaran (privat)
+        2. Info Jadwal/Kegiatan terdekat
+        3. Info PPDB
+        4. Cek status PPDB
+        5. Cek kelulusan (privat)
+        6. Download Brosur
+        Silahkan sebarkan informasi ini untuk saudara, keluarga & lingkungan terdekat Bapak/Ibu $parent_name 🙏
+        
+        Agar semakin banyak yang mendapatkan manfaat atas keberadaan sekolah Khazanah Ilmu di tengah masyarakat";
+        Whatsapp::send($froms[0], $msg);
+        die();
+    }
+
     if($message == 'cek bill')
     {
         require 'webhook-action/cek-bill.php';
+    }
+    else
+    {
+        if($message == 1)
+        {
+            require 'webhook-action/cek-bill.php';
+        }
+        else
+        {
+            Whatsapp::send($froms[0], "Mohon Maaf! Fitur masih dalam pengerjaan");
+            die();
+        }
     }
     // Whatsapp::send($from2, "");
 } catch (\Throwable $th) {
