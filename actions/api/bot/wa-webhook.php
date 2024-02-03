@@ -76,7 +76,8 @@ Agar semakin banyak yang mendapatkan manfaat atas keberadaan sekolah Khazanah Il
     {
         require 'webhook-action/cek-bill.php';
     }
-    else
+    
+    if(in_array($message, [1,2,3,4,5,6]))
     {
         if($message == 1)
         {
