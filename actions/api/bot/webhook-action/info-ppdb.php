@@ -19,7 +19,7 @@ PPDB PG/TK/SD KHAZANAH ILMU TAHUN PELAJARAN 2024/2025
 
            *_ JOIN US...._*
 
-KUOTA KELAS SD TERSISA HANYA 2 KELAS
+KUOTA KELAS SD TERSISA HANYA 1 KELAS
 
 KHAZANAH ILMU
 
@@ -36,7 +36,7 @@ SD        : wa.me/628113218110
 
 Link Download Brosur 
 
-https://bit.ly/brosurPPDB2024-2025YKI
+https://s.id/Brosur-KI
 
 Follow us :
 Instagram : @institusikhazanahilmu
