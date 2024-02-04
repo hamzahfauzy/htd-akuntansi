@@ -82,6 +82,14 @@ Agar semakin banyak yang mendapatkan manfaat atas keberadaan sekolah Khazanah Il
         {
             require 'webhook-action/cek-bill.php';
         }
+        elseif($message == 3)
+        {
+            require 'webhook-action/info-ppdb.php';
+        }
+        elseif($message == 6)
+        {
+            require 'webhook-action/download-brosur.php';
+        }
         else
         {
             Whatsapp::send($froms[0], "Mohon Maaf! Fitur masih dalam pengerjaan");
