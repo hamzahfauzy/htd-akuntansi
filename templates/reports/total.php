@@ -24,6 +24,7 @@
                                     <label for="">Tingkat Kelas</label><br>
                                     <select name="parent_group" id="parent_group" class="form-control" onchange="showChild(this.value)">
                                         <option value="">Semua</option>
+                                        <option value="active-group" <?=isset($_GET['parent_group']) && $_GET['parent_group'] == 'active-group' ? 'selected=""' : ''?>>Semua Kelas Aktif</option>
                                         <?php foreach($parentGroups as $group): ?>
                                             <option value="<?=$group->id?>" <?=isset($_GET['parent_group']) && $_GET['parent_group'] == $group->id ? 'selected=""' : ''?>><?=$group->name?></option>
                                         <?php endforeach ?>
@@ -40,11 +41,11 @@
                                 </div>
                                 <div class="form-group flex-fill">
                                     <label for="">Waktu Awal</label><br>
-                                    <input type="date" name="start_at" class="form-control" value="<?=isset($_GET['start_at']) ? $_GET['start_at'] : ''?>">
+                                    <input type="date" name="start_at" id="start_at" class="form-control" value="<?=isset($_GET['start_at']) ? $_GET['start_at'] : ''?>">
                                 </div>
                                 <div class="form-group flex-fill">
                                     <label for="">Waktu Akhir</label><br>
-                                    <input type="date" name="end_at" class="form-control" value="<?=isset($_GET['end_at']) ? $_GET['end_at'] : ''?>">
+                                    <input type="date" name="end_at" id="end_at" class="form-control" value="<?=isset($_GET['end_at']) ? $_GET['end_at'] : ''?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="">&nbsp;</label><br>
@@ -59,7 +60,7 @@
             <div class="row">
                 <?php foreach($data as $d): ?>
                 <div class="col-md-6">
-                    <div class="card">
+                    <div class="card merchant-detail" style="cursor: pointer;" data-merchant="<?=$d->merchant_id?>">
                         <div class="card-body">
                             <h3><?=$d->merchant_name?></h2>
                             <h4>Tagihan : Rp. <?=number_format($d->bills_total_amount, 0, ',', '.')?></h4>
@@ -69,6 +70,29 @@
                     </div>
                 </div>
                 <?php endforeach ?>
+            </div>
+
+            <div class="row row-card-no-pd">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive table-hover table-sales">
+                                <table class="table datatable-total">
+                                    <thead>
+                                        <tr>
+                                            <th width="20px">#</th>
+                                            <th>Group</th>
+                                            <th>Merchant</th>
+                                            <th>Total Tagihan</th>
+                                            <th>Total Pembayaran</th>
+                                            <th>Sisa</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

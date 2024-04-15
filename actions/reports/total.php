@@ -24,16 +24,13 @@ if(isset($_GET['parent_group']) || isset($_GET['group']) || (isset($_GET['start_
     // $where = "WHERE ";
     if(isset($_GET['parent_group']) && !empty($_GET['parent_group']) && empty($_GET['group']))
     {
-        $_additional[] = "(SELECT id FROM `groups` WHERE id=(SELECT group_id FROM subject_groups WHERE user_id=subjects.user_id)) group_id";
-        $_where[] = " (SELECT parent_id FROM `groups` WHERE id=(SELECT group_id FROM subject_groups WHERE user_id=subjects.user_id)) = $_GET[parent_group]";
-        $group   .= ", group_id";
+        $parentGroup = $_GET['parent_group'] == 'active-group' ? ' IN ('.implode(',', config('activeGroups')).')' : ' = '.$_GET['parent_group'];
+        $_where[] = " (SELECT parent_id FROM `groups` WHERE id=(SELECT group_id FROM subject_groups WHERE user_id=subjects.user_id)) $parentGroup";
     }
 
     if(isset($_GET['group']) && !empty($_GET['group']))
     {
-        $_additional[] = "(SELECT id FROM `groups` WHERE id=(SELECT group_id FROM subject_groups WHERE user_id=subjects.user_id)) group_id";
         $_where[] = " (SELECT id FROM `groups` WHERE id=(SELECT group_id FROM subject_groups WHERE user_id=subjects.user_id)) = $_GET[group]";
-        $group   .= ", group_id";
     }
 
     if(isset($_GET['start_at']) && !empty(($_GET['start_at'])) && isset($_GET['end_at']) && !empty(($_GET['end_at'])))
@@ -58,6 +55,7 @@ $query = "SELECT
           INNER JOIN merchants ON merchants.id=bills.merchant_id
           $where
           GROUP BY $group";
+
 $db->query = $query;
 $data = $db->exec('all');
 

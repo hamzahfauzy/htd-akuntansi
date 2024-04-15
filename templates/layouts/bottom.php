@@ -319,6 +319,40 @@
 			}
 		});
 		<?php endif ?>
+
+		var tableTotal = null;
+
+		(e => {
+			$('.merchant-detail').click(f => {
+				const merchant = $(f.currentTarget).data('merchant')
+				const parentGroup = $('#parent_group').val()
+				const group = $('#group').val()
+				const startAt = $('#start_at').val()
+				const endAt = $('#end_at').val()
+				console.log({
+					merchant,
+					parentGroup,
+					group,
+					startAt,
+					endAt
+				})
+
+				if(tableTotal)
+				{
+					tableTotal.destroy()
+				}
+
+				tableTotal = $('.datatable-total').DataTable({
+					pagingType: 'full_numbers_no_ellipses',
+					processing: true,
+					search: {
+						return: true
+					},
+					serverSide: true,
+					ajax: `<?=routeTo('reports/total-detail')?>?merchant=${merchant}&parent_group=${parentGroup}&group=${group}&start_at=${startAt}&end_at=${endAt}`
+				})
+			})
+		})()
 	</script>
 </body>
 </html>
