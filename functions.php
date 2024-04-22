@@ -15,6 +15,7 @@ require $parent_path . 'libs/Form.php';
 require $parent_path . 'libs/ArrayHelper.php';
 require $parent_path . 'libs/ApiSession.php';
 require $parent_path . 'libs/Session.php';
+require $parent_path . 'libs/Log.php';
 require $parent_path . 'libs/Database.php';
 require $parent_path . 'libs/Notification.php';
 require $parent_path . 'libs/Page.php';

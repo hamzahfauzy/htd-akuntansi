@@ -1,5 +1,13 @@
 <?php
 
+try {
+    //code...
+    Log::write('start autodebit');
+    Log::write($_POST);
+} catch (\Throwable $th) {
+    //throw $th;
+}
+
 // bill validation
 Validation::run([
     'bill_code' => [
@@ -108,4 +116,12 @@ echo json_encode([
     'success' => true,
     'message' => 'payment for '.$_POST['bill_code'].' success'
 ]);
+
+try {
+    //code...
+    Log::write('payment for '.$_POST['bill_code'].' success');
+    Log::write('end autodebit');
+} catch (\Throwable $th) {
+    //throw $th;
+}
 die();
