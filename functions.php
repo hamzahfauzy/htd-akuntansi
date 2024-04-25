@@ -824,3 +824,69 @@ function generateRandomString($length = 50) {
     }
     return $randomString;
 }
+
+function createBills($db, $report_id, $code, $clause, $bill_code, $amount, $merchant, $description)
+{
+    // check if subject exists
+    if(!$db->exists('subjects',[''.$clause.'' => $code]))
+    {
+        return [
+            'message' => "Subject with $clause $code is not exists\n",
+            'status'  => 'failed'
+        ];
+    }
+    
+    if(!$db->exists('merchants',['name' => $merchant]))
+    {
+        return [
+            'message' => "Merchant with name $merchant is not exists\n",
+            'status'  => 'failed'
+        ];
+    }
+
+    $subject  = $db->single('subjects',[''.$clause.'' => $code]);
+    $merchant = $db->single('merchants',['name' => $merchant]);
+
+    $data = [
+        'subject_id' => $subject->id,
+        'merchant_id' => $merchant->id,
+        'report_id' => $report_id,
+        'bill_code' => $subject->code.'-'.$bill_code,
+        'description' => $description,
+        'amount' => $amount,
+        'remaining_payment' => $amount,
+        'status' => 'BELUM LUNAS',
+    ];
+
+    $insert = $db->insert('bills',$data);
+
+    if($merchant->debt_bill_account_id)
+    {
+        // jurnal debet
+        $db->insert('journals',[
+            'report_id'  => $report_id,
+            'account_id' => $merchant->debt_bill_account_id,
+            'transaction_type' => 'Debit',
+            'amount' => $insert->amount,
+            'description' => $insert->description,
+            'transaction_code' => 'bill-'.$insert->bill_code,
+            'date' => date('Y-m-d')
+        ]);
+    }
+
+    if($merchant->credit_bill_account_id)
+    {
+        // jurnal kredit
+        $db->insert('journals',[
+            'report_id'  => $report_id,
+            'account_id' => $merchant->credit_bill_account_id,
+            'transaction_type' => 'Kredit',
+            'amount' => $insert->amount,
+            'description' => $insert->description,
+            'transaction_code' => 'bill-'.$insert->bill_code,
+            'date' => date('Y-m-d')
+        ]);
+    }
+
+    return $insert;
+}
