@@ -24,11 +24,20 @@ Validation::run([
 $conn = conn();
 $db   = new Database($conn);
 
-$bill     = $db->single('bills',['bill_code' => $_POST['bill_code']]);
+$amount      = $_POST['amount'];
+$bill_code   = $_POST['bill_code'];
+
+$bill     = $db->single('bills',[
+    'bill_code' => $bill_code,
+    'amount' => $amount,
+], [
+    'remaining_payment' => 'DESC'
+]);
+
 $merchant = $db->single('merchants',['id' => $bill->merchant_id]);
 $subject  = $db->single('subjects',['id' => $bill->subject_id]);
 
-$amount      = $_POST['amount'];
+
 $description = $_POST['description'];
 $sisa        = $bill->remaining_payment - $amount;
 $transaction_code = 'TRX-'.strtotime('now');
