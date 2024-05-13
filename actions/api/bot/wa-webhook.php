@@ -33,7 +33,7 @@ try {
 
     // check sender session
     $sessionId = $from.'-'.date('Y-m-d');
-    if(!file_exists("bot/$sessionId"))
+    if(!file_exists("bot/$sessionId") && $message == 'salam')
     {
         // set session by sender number and date
         mkdir("bot/$sessionId");
