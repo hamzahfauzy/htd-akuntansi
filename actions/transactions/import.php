@@ -66,16 +66,23 @@ if(request() == 'POST')
             continue;
         }
 
-        $bill = $db->single('bills',['bill_code' => $subject->code.'-'.$bill_code]);
-        $sisa = $bill->remaining_payment - $amount;
-        if($sisa < 0){
+        if(!$db->exists('bills',['bill_code' => $subject->code.'-'.$bill_code, 'remaining_payment' => $amount]))
+        {
             $failed++;
-            $logs .= "Amount of bill with $subject->code-$bill_code is bigger than remaining payment\n";
-            continue; // something wrong
+            $logs .= "Bill with $subject->code-$bill_code and amount $amount is not exists\n";
+            continue;
         }
+
+        $bill = $db->single('bills',['bill_code' => $subject->code.'-'.$bill_code, 'remaining_payment' => $amount]);
+        // $sisa = $bill->remaining_payment - $amount;
+        // if($sisa < 0){
+        //     $failed++;
+        //     $logs .= "Amount of bill with $subject->code-$bill_code is bigger than remaining payment\n";
+        //     continue; // something wrong
+        // }
         $db->update('bills',[
-            'remaining_payment' => $sisa,
-            'status' => $sisa == 0 ? 'LUNAS' : 'BELUM LUNAS'
+            'remaining_payment' => 0,
+            'status' => 'LUNAS'
         ],[
             'id' => $bill->id
         ]);

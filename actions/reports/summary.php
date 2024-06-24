@@ -79,7 +79,7 @@ if(isset($_GET['draw']))
                 WHERE $where
                 GROUP BY bills.merchant_id, group_name, bills.description";
 
-    $db->query = $query . " ORDER BY $col_order LIMIT $start,$length";
+    $db->query = $query . " ORDER BY bills.created_at ASC LIMIT $start,$length";
     $data  = $db->exec('all');
 
     $db->query = $query;

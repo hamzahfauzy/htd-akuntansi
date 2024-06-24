@@ -4,6 +4,7 @@ $group = $_GET['searchByGroup'];
 $merchant = $_GET['searchByMerchant'];
 $subject = $_GET['searchBySubject'];
 $status = $_GET['searchByStatus'];
+$date = json_decode($_GET['searchByDate']);
 
 if($search)
 {
@@ -40,6 +41,14 @@ if($merchant)
 if($status)
 {
     $where .= " AND status='$status'";
+}
+
+if($date->start_at || $date->end_at)
+{
+    $date->start_at = $date->start_at ?? date('Y-m-d');
+    $date->end_at = $date->end_at ?? date('Y-m-d');
+
+    $where .= " AND DATE_FORMAT(bills.created_at, '%Y-%m-%d') BETWEEN '$date->start_at' AND '$date->end_at'";
 }
 
 $query = "SELECT `$table`.*, CONCAT(subjects.code,' - ',subjects.name) subject_name FROM `$table` JOIN subjects ON subjects.id = `$table`.subject_id $where ORDER BY ".$col_order." ".$order[0]['dir'];

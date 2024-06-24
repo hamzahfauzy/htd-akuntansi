@@ -84,17 +84,23 @@
 					var subject = $('select[name=subject]').val()
 					var merchant = $('select[name=merchant]').val()
 					var status = $('select[name=status]').val()
+					var startAt = $('input[name=start_at]').val()
+					var endAt = $('input[name=end_at]').val()
 
 					// Append to data
 					data.searchByGroup = group
 					data.searchBySubject = subject
 					data.searchByMerchant = merchant
 					data.searchByStatus = status
+					data.searchByDate = JSON.stringify({
+						start_at: startAt,
+						end_at: endAt
+					})
 				}
 			}
 		})
 		<?php elseif(get_route() == 'crud/index' && $_GET['table'] == 'transactions'): ?>
-		$('.datatable-crud').dataTable({
+		window.trxData = $('.datatable-crud').DataTable({
 			order: [[4, 'desc']],
 			stateSave:true,
 			pagingType: 'full_numbers_no_ellipses',
@@ -103,7 +109,41 @@
 				return: true
 			},
 			serverSide: true,
-			ajax: location.href
+			ajax: {
+				url: location.href,
+				data: function(data){
+					// Read values
+					var startAt = $('input[name=start_at]').val()
+					var endAt = $('input[name=end_at]').val()
+
+					// Append to data
+					data.searchByDate = JSON.stringify({
+						start_at: startAt,
+						end_at: endAt
+					})
+				}
+			}
+		})
+		<?php elseif(get_route() == 'crud/index' && $_GET['table'] == 'subjects'): ?>
+		window.subjectData = $('.datatable-crud').DataTable({
+			order: [[4, 'desc']],
+			stateSave:true,
+			pagingType: 'full_numbers_no_ellipses',
+			processing: true,
+			search: {
+				return: true
+			},
+			serverSide: true,
+			ajax: {
+				url: location.href,
+				data: function(data){
+					// Read values
+					var group = $('select[name=group]').val()
+					
+					// Append to data
+					data.searchByGroup = group
+				}
+			}
 		})
 		<?php else: ?>
 		$('.datatable-crud').dataTable({

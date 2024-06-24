@@ -20,7 +20,7 @@
                         <div class="card-body">
                             <form action="" class="d-flex" onsubmit="window.billData.draw(); return false">
                                 <input type="hidden" name="table" value="bills">
-                                <div class="form-group flex-fill">
+                                <div class="form-group w-100">
                                     <label for="">Group</label><br>
                                     <select name="group" id="" class="form-control select2">
                                         <option value="">Pilih</option>
@@ -29,7 +29,7 @@
                                         <?php endforeach ?>
                                     </select>
                                 </div>
-                                <div class="form-group flex-fill">
+                                <div class="form-group w-100">
                                     <label for="">Merchant</label><br>
                                     <select name="merchant" id="" class="form-control select2">
                                         <option value="">Pilih</option>
@@ -38,9 +38,13 @@
                                         <?php endforeach ?>
                                     </select>
                                 </div>
-                                <div class="form-group flex-fill">
+                                <div class="form-group w-100">
                                     <label for="">&nbsp;</label><br>
-                                    <button class="btn btn-primary btn-sm">Filter</button>
+                                    <div class="d-flex">
+                                        <button class="btn btn-primary btn-sm w-100">Filter</button>
+                                        &nbsp;
+                                        <button type="button" class="btn btn-secondary btn-sm w-100" onclick="downloadReport()">Download</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -77,4 +81,17 @@
             </div>
         </div>
     </div>
+    <script>
+    function downloadReport()
+    {
+        const group_id = document.querySelector('[name="group"]')
+        const merchant_id = document.querySelector('[name="merchant"]')
+        const url = new URLSearchParams({
+            group: group_id.value ?? '',
+            merchant: merchant_id.value ?? '',
+        }).toString();
+
+        window.location = "<?=routeTo('reports/summary-download')?>?"+url
+    }
+    </script>
 <?php load_templates('layouts/bottom') ?>

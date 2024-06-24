@@ -12,7 +12,7 @@ $lang = require $parent_path . 'config/lang.php';
 $app = require $parent_path . 'config/app.php';
 
 $config = [
-    'default_page' => 'index',
+    'default_page' => 'default/index',
     'after_login_page' => 'default/index',
     'auth' => 'session', //JWT or Session
     'menu' => [
