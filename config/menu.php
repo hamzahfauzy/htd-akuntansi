@@ -26,6 +26,7 @@ return [
             'rangkuman' => 'reports/summary',
             'rekapitulasi' => 'reports/recaps',
             'total' => 'reports/total',
+            'logs' => 'crud/index?table=logs',
         ]
     ],
     'kontak' => 'crud/index?table=contacts',
