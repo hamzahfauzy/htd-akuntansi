@@ -29,6 +29,9 @@ $bill_code   = $_POST['bill_code'];
 
 $bill     = $db->single('bills',[
     'bill_code' => $bill_code,
+    'amount' => $amount,
+], [
+    'remaining_payment' => 'DESC'
 ]);
 
 $merchant = $db->single('merchants',['id' => $bill->merchant_id]);

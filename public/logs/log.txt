@@ -6912,3 +6912,9 @@
 2024-06-12 16:47:14 : {"bill_code":"22059-spp-juni-2024","amount":"475000.00","description":"061286720000400"}
 2024-06-12 16:47:14 : payment for 22059-spp-juni-2024 success
 2024-06-12 16:47:14 : end autodebit
+2024-07-11 10:27:48 : start autodebit
+2024-07-11 10:27:48 : {"bill_code":"22077-spp-April-2024","amount":"475000.00","description":"042986720001080"}
+2024-07-11 10:29:05 : start autodebit
+2024-07-11 10:29:05 : {"bill_code":"784-spp-juni-2024","amount":"440000.00","description":"062886720000530"}
+2024-07-11 10:29:05 : payment for 784-spp-juni-2024 success
+2024-07-11 10:29:05 : end autodebit

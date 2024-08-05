@@ -25,4 +25,18 @@ $subject->transactions = $db->exec('all');
 $db->query = "SELECT * FROM `groups` WHERE id IN (SELECT group_id FROM subject_groups WHERE subject_groups.user_id = $subject->user_id)";
 $subject->groups   = $db->exec('all');
 
+$db->query = "SELECT 
+            bill_master.*, 
+            merchants.name as merchant_name,
+            SUM(bills.amount) - SUM(bills.remaining_payment) as bill_pay,
+            SUM(bills.remaining_payment) as bill_remaining_payment,
+            bill_master.total_amount - (SUM(bills.amount) - SUM(bills.remaining_payment)) as actual_remaining_payment
+        FROM 
+            bill_master 
+        JOIN merchants ON merchants.id = bill_master.merchant_id 
+        JOIN bills ON bills.bill_master_id = bill_master.id
+        WHERE 
+            bill_master.subject_id = $subject->id";
+$subject->billMaster   = $db->exec('all');
+
 return compact('subject');

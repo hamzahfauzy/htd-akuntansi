@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <h4>Informasi Grup</h4>
+                            <h4 class="mt-5">Informasi Grup</h4>
                             <div class="table-responsive table-hover table-sales">
                                 <table class="table datatable">
                                     <thead>
@@ -62,7 +62,41 @@
                                 </table>
                             </div>
                             <hr>
-                            <h4>Informasi Tagihan</h4>
+                            <h4 class="mt-5">Informasi Master Tagihan</h4>
+                            <div class="table-responsive table-hover table-sales">
+                                <table class="table datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Merchant</th>
+                                            <th>Jumlah</th>
+                                            <th>Jumlah Tagihan</th>
+                                            <th>Total</th>
+                                            <th>Terbayar</th>
+                                            <th>Sisa Tagihan</th>
+                                            <th>Sisa Bill</th>
+                                            <th>Tanggal Aktif</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($subject->billMaster as $index => $bill): ?>
+                                        <tr>
+                                            <td><?=$index+1?></td>
+                                            <td><?=$bill->merchant_name?></td>
+                                            <td><?=number_format($bill->base_amount)?></td>
+                                            <td><?=number_format($bill->num_of_bills)?></td>
+                                            <td><?=number_format($bill->total_amount)?></td>
+                                            <td><?=number_format($bill->bill_pay)?></td>
+                                            <td><?=number_format($bill->actual_remaining_payment)?></td>
+                                            <td><?=number_format($bill->bill_remaining_payment)?></td>
+                                            <td><?=$bill->start_at?> s/d <?=$bill->end_at?></td>
+                                        </tr>
+                                        <?php endforeach ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <h4 class="mt-5">Informasi Tagihan</h4>
                             <div class="table-responsive table-hover table-sales">
                                 <table class="table datatable">
                                     <thead>
@@ -92,7 +126,7 @@
                                 </table>
                             </div>
                             <hr>
-                            <h4>Informasi Transaksi</h4>
+                            <h4 class="mt-5">Informasi Transaksi</h4>
                             <div class="table-responsive table-hover table-sales">
                                 <table class="table datatable">
                                     <thead>
